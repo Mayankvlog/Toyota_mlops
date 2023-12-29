@@ -1,4 +1,4 @@
-![toyota](https://github.com/Mayankvlog/Toyota_mlops/assets/99034548/831c21f1-ae5e-4957-a1ef-638f3fdc9a38)# Toyota_dvc
+# Toyota_dvc
 MLFLOW_TRACKING_URI=https://dagshub.com/Mayankvlog/Toyota_mlops.mlflow \
 MLFLOW_TRACKING_USERNAME=Mayankvlog \
 MLFLOW_TRACKING_PASSWORD=a163dc11889cf8831384598f795e7c53cd54b1d2 \
