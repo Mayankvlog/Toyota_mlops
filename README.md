@@ -1,4 +1,4 @@
-# Toyota_dvc
+# Toyota_mlops
 Features of the app
 
 To enter automobile specs like age, miles, horsepower, and so on, drag and drop sliders and checkboxes on the sidebar.
