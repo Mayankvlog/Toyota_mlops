@@ -145,13 +145,13 @@ if mlflow.active_run() is None:
 
     # Log metrics to MLflow
     # Define values for additional metrics
-      value1 = 42  # Replace with the actual value for AdditionalMetric1
-      value2 = 23.5  # Replace with the actual value for AdditionalMetric2
+    # value1 = 42  # Replace with the actual value for AdditionalMetric1
+    # value2 = 23.5  # Replace with the actual value for AdditionalMetric2
 
     # Log metrics to MLflow
     # Log additional metrics if needed
-      mlflow.log_metric("AdditionalMetric1", value1)
-      mlflow.log_metric("AdditionalMetric2", value2)
+    # mlflow.log_metric("AdditionalMetric1", value1)
+    # mlflow.log_metric("AdditionalMetric2", value2)
 
 
     
