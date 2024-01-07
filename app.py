@@ -120,6 +120,12 @@ with open(model_filename, 'wb') as model_file:
     pickle.dump(model, model_file)
 
 # Log parameters and metrics with MLflow
+experiment_name = "my_experiment"  # Replace with your experiment name
+
+# Set the experiment
+mlflow.set_experiment(experiment_name)
+
+# Log parameters and metrics with MLflow
 if mlflow.active_run() is None:
    with mlflow.start_run():
       mlflow.log_param("Model", selected_model)
