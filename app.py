@@ -9,6 +9,10 @@ from sklearn.linear_model import LinearRegression
 import mlflow
 import mlflow.sklearn
 import pickle
+import logging
+
+# Set up logging
+logging.basicConfig(filename='app.log', level=logging.INFO)
 
 # Load Toyota dataset
 data = pd.read_csv('data/Toyota.csv')
@@ -115,6 +119,44 @@ model_filename = f'models/{selected_model.lower()}_model.pkl'
 with open(model_filename, 'wb') as model_file:
     pickle.dump(model, model_file)
 
+# Log parameters and metrics with MLflow
+experiment_name = "my_experiment"  # Replace with your experiment name
+
+# Set the experiment
+mlflow.set_experiment(experiment_name)
+
+# Log parameters and metrics with MLflow
+if mlflow.active_run() is None:
+   with mlflow.start_run():
+      mlflow.log_param("Model", selected_model)
+      mlflow.log_param("Age", df['Age'][0])
+      mlflow.log_param("KM", df['KM'][0])
+      mlflow.log_param("HP", df['HP'][0])
+      mlflow.log_param("MetColor", df['MetColor'][0])
+      mlflow.log_param("Automatic", df['Automatic'][0])
+      mlflow.log_param("CC", df['CC'][0])
+      mlflow.log_param("Doors", df['Doors'][0])
+      mlflow.log_param("Weight", df['Weight'][0])
+      #mlflow.log_param("FuelType", df['FuelType'][0])
+      mlflow.log_metric("PredictedPrice", prediction[0])
+
+    # Log to file
+      logging.info(f"Prediction: {prediction[0]:,.2f}")
+
+
+    # Log metrics to MLflow
+    # Define values for additional metrics
+      value1 = 42  # Replace with the actual value for AdditionalMetric1
+      value2 = 23.5  # Replace with the actual value for AdditionalMetric2
+
+    # Log metrics to MLflow
+    # Log additional metrics if needed
+      mlflow.log_metric("AdditionalMetric1", value1)
+      mlflow.log_metric("AdditionalMetric2", value2)
+
+
+    
+
 # Visualization
 st.subheader("Visualization")
 
@@ -138,5 +180,20 @@ st.subheader("Line Plot:")
 line_fig = px.line(data, x='KM', y='Price', color='FuelType')
 st.plotly_chart(line_fig)
 
+# Save plots as artifacts
+scatter_fig.write_html("scatter_plot.html")
+mlflow.log_artifact("scatter_plot.html")
 
+pie_fig.write_html("pie_plot.html")
+mlflow.log_artifact("pie_plot.html")
+
+bar_fig.write_html("bar_plot.html")
+mlflow.log_artifact("bar_plot.html")
+
+line_fig.write_html("line_plot.html")
+mlflow.log_artifact("line_plot.html")
+
+mlflow.end_run()
+
+# Link to DAGsHub Repository
 st.markdown("[DAGsHub Repository](https://dagshub.com/Mayankvlog/Toyota_mlops.mlflow)")
