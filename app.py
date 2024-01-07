@@ -137,6 +137,7 @@ if mlflow.active_run() is None:
       mlflow.log_param("CC", df['CC'][0])
       mlflow.log_param("Doors", df['Doors'][0])
       mlflow.log_param("Weight", df['Weight'][0])
+      #mlflow.log_param("FuelType", df['FuelType'][0])
       mlflow.log_metric("PredictedPrice", prediction[0])
 
     # Log to file
@@ -145,14 +146,20 @@ if mlflow.active_run() is None:
 
     # Log metrics to MLflow
     # Define values for additional metrics
-    # value1 = 42  # Replace with the actual value for AdditionalMetric1
-    # value2 = 23.5  # Replace with the actual value for AdditionalMetric2
+    #  value1 = 42  # Replace with the actual value for AdditionalMetric1
+    #  value2 = 23.5  # Replace with the actual value for AdditionalMetric2
 
     # Log metrics to MLflow
     # Log additional metrics if needed
-    # mlflow.log_metric("AdditionalMetric1", value1)
-    # mlflow.log_metric("AdditionalMetric2", value2)
+    #  mlflow.log_metric("AdditionalMetric1", value1)
+    #  mlflow.log_metric("AdditionalMetric2", value2)
 
+
+    # Make predictions
+      prediction = model.predict(df)
+
+    # Log parameters (since prediction is a category)
+      mlflow.log_param("prediction", prediction[0])
 
     
 
