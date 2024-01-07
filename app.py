@@ -137,7 +137,6 @@ if mlflow.active_run() is None:
       mlflow.log_param("CC", df['CC'][0])
       mlflow.log_param("Doors", df['Doors'][0])
       mlflow.log_param("Weight", df['Weight'][0])
-      #mlflow.log_param("FuelType", df['FuelType'][0])
       mlflow.log_metric("PredictedPrice", prediction[0])
 
     # Log to file
