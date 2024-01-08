@@ -11,6 +11,7 @@ import mlflow.sklearn
 import pickle
 import logging
 
+
 # Set up logging
 logging.basicConfig(filename='app.log', level=logging.INFO)
 
@@ -200,6 +201,7 @@ line_fig.write_html("line_plot.html")
 mlflow.log_artifact("line_plot.html")
 
 mlflow.end_run()
+
 
 # Link to DAGsHub Repository
 st.markdown("[DAGsHub Repository](https://dagshub.com/Mayankvlog/Toyota_mlops.mlflow)")
