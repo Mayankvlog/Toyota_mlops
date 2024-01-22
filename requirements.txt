@@ -4,4 +4,4 @@ logging
 plotly
 scikit_learn
 streamlit
-mlflow dagshub
+
