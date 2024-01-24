@@ -32,7 +32,9 @@ class TestStreamlitApp(unittest.TestCase):
     def test_prediction_logic(self):
         # Simulate prediction logic test
         # You may need to adjust this based on your actual model logic
-        from your_streamlit_app_file import model  # Import the actual model from your app file
+
+
+        from  app  import model  # Import the actual model from your app file
 
         # Simulate input features
         input_features = {
@@ -48,7 +50,7 @@ class TestStreamlitApp(unittest.TestCase):
         }
 
         # Simulate the expected prediction
-        expected_prediction = 25000.0  # Replace with the expected prediction for your model
+        expected_prediction = 25000.0  
 
         # Make the prediction
         prediction = model.predict(input_features)
@@ -56,4 +58,3 @@ class TestStreamlitApp(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
