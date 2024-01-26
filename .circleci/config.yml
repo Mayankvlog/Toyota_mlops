@@ -1,0 +1,103 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r requirements.txt
+
+      - store_artifacts:
+          path: /app/models
+          destination: /artifacts
+
+      - store_artifacts:
+          path: /app/models
+
+      - store_test_results:
+          path: /test-report
+
+  deploy:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - checkout
+
+      - run:
+          name: Deploy to Production
+          command: |
+            # Add deployment commands here
+            # e.g., deploy your app using a specific script or command
+
+  test_and_deploy:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r requirements.txt
+
+      - run:
+          name: Deploy to Production
+          command: |
+            # Add deployment commands here
+            # e.g., deploy your app using a specific script or command
+
+      - persist_to_workspace:
+          root: /app
+          paths:
+            - models/
+
+  create_dummy_artifacts:
+    docker:
+      - image: alpine
+
+    working_directory: /dummy
+
+    steps:
+      - run:
+          name: Creating Dummy Artifacts
+          command: |
+            mkdir -p /dummy/artifacts
+            echo "Dummy Artifact Content" > /dummy/artifacts/dummy.txt
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - test_and_deploy:
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
+      - create_dummy_artifacts:  
+          requires:
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
