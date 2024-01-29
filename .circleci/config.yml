@@ -15,15 +15,19 @@ jobs:
           command: |
             pip install -r requirements.txt
 
-      - store_artifacts:
-          path: /app/models
-          destination: /artifacts
+      - run:
+          name: Run tests and generate JUnit XML report
+          command: |
+            pytest --junitxml=/app/test-report/test-results.xml
+            coverage run -m unittest discover tests/
+            coverage html -d coverage_html
 
-      - store_artifacts:
-          path: /app/models
-
-      - store_test_results:
-          path: /test-report
+      - persist_to_workspace:
+          root: /app
+          paths:
+            - models/
+            - coverage_html/
+            - test-report/
 
   deploy:
     docker:
@@ -58,15 +62,10 @@ jobs:
           name: Deploy to Production
           command: |
             # Add deployment commands here
-            # e.g., deploy your app using a specific script or command
-
-      - persist_to_workspace:
-          root: /app
-          paths:
-            - models/
+            # e.g., deploy your app 
 
   create_dummy_artifacts:
-    docker:
+    docker: 
       - image: alpine
 
     working_directory: /dummy
@@ -78,9 +77,28 @@ jobs:
             mkdir -p /dummy/artifacts
             echo "Dummy Artifact Content" > /dummy/artifacts/dummy.txt
 
+  merge_results:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - attach_workspace:
+          at: /app
+
+      - run:
+          name: Merge Test Results
+          command: |
+            mkdir -p /app/test-report
+            find /app -name 'test-results*.xml' -exec cat {} + > /app/test-report/all-results.xml
+
+      - store_test_results:
+          path: /app/test-report
+
 workflows:
   version: 2
-  build_and_deploy:
+  build_and_test:
     jobs:
       - test_and_deploy:
           filters:
@@ -95,6 +113,13 @@ workflows:
               only:
                 - master
       - create_dummy_artifacts:  
+          requires:
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
+      - merge_results:
           requires:
             - test_and_deploy
           filters:
