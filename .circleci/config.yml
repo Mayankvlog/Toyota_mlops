@@ -76,14 +76,6 @@ jobs:
           command: |
             mkdir -p /dummy/artifacts
             echo "Dummy Artifact Content" > /dummy/artifacts/dummy.txt
-
-
-
-       - store_artifacts:
-          path: /app/test-report
-          destination: test-results
-
-
       
 
   merge_results:
