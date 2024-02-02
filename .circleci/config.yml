@@ -116,6 +116,11 @@ jobs:
       - store_test_results:
           path: /app/test-report
 
+      
+      - run:
+          name: Install curl
+          command: apk --no-cache add curl
+
       - run:
           name: Download and Store test_results
           command: |
