@@ -81,7 +81,7 @@ jobs:
           command: |
             curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
                  -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
-                 -o artifact.zip \
+                 -o /home/mayank/artifact.zip \
                  https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/71/artifacts
 
   merge_results:
