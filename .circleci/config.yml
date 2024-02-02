@@ -116,6 +116,16 @@ jobs:
       - store_test_results:
           path: /app/test-report
 
+      - run:
+          name: Download and Store test_results
+          command: |
+            apk --no-cache add curl
+            curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
+                 -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
+                 -o test_results.xml \
+                 "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/84/artifacts/0/test-report/test-results.xml"
+
+
 workflows:
   version: 2
   build_and_test:
