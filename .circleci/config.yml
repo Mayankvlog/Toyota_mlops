@@ -82,6 +82,11 @@ jobs:
           path: /dummy/artifacts/dummy.txt
           destination: dummy-artifact
 
+      
+      - run:
+          name: Install curl
+          command: apk --no-cache add curl
+
       - run:
           name: Download and Store Artifacts
           command: |
