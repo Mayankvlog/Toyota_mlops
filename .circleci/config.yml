@@ -103,7 +103,7 @@ jobs:
 
   download_and_store_test_results:
     docker:
-      - image: debian:stretch-slim  # Use Debian-based image
+      #- image: debian:stretch-slim  # Use Debian-based image
       - image: python:3.8
 
     working_directory: /app
