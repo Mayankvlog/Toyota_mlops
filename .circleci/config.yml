@@ -106,7 +106,7 @@ jobs:
       - image: debian:stretch-slim  # Use Debian-based image
       - image: alpine
 
-    working_directory: /dummy
+    working_directory: /app
 
     steps:
       - run:
