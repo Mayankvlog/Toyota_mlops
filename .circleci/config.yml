@@ -178,7 +178,7 @@ workflows:
             branches:
               only:
                 - master
-     - download_and_store_test_results:
+      - download_and_store_test_results:
           requires:
             - create_dummy_artifacts
           filters:
