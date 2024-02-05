@@ -38,9 +38,7 @@ jobs:
           name: Deploy to Production
           command: |
             # e.g., deploy your app using a specific script or command
-            streamlit run app.py --server.address 127.0.0.1 --server.port 8501
-            timeout: 20m 
-
+            
   test_and_deploy:
     docker:
       - image: python:3.8
@@ -56,9 +54,7 @@ jobs:
       - run:
           name: Deploy to Production
           command: |
-            # e.g., deploy your app 
-            streamlit run app.py --server.address 127.0.0.1 --server.port 8501
-            timeout: 20m 
+            # e.g., deploy your app
 
   create_dummy_artifacts:
     docker: 
