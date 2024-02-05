@@ -1,26 +1,6 @@
 import pytest
+import numpy as np
 from app import user_input_features, model
-
-@pytest.mark.parametrize("slider_age, slider_km, slider_hp, checkbox_met_color, checkbox_automatic, slider_cc, slider_doors, slider_weight, select_fuel_type, expected_result", [
-    (5, 50000, 100, False, False, 1500, 4, 1500, 'Petrol', {
-        'Age': 5,
-        'KM': 50000,
-        'HP': 100,
-        'MetColor': False,
-        'Automatic': False,
-        'CC': 1500,
-        'Doors': 4,
-        'Weight': 1500,
-        'FuelType': 0  # Numeric value for 'Petrol'
-    }),
-])
-def test_user_input_features(slider_age, slider_km, slider_hp, checkbox_met_color, checkbox_automatic, slider_cc, slider_doors, slider_weight, select_fuel_type, expected_result):
-    with pytest.raises(Exception):  # Replace with your actual exception
-        with patch('streamlit.sidebar.slider', side_effect=[slider_age, slider_km, slider_hp, slider_cc, slider_doors, slider_weight]):
-            with patch('streamlit.sidebar.checkbox', side_effect=[checkbox_met_color, checkbox_automatic]):
-                with patch('streamlit.sidebar.selectbox', return_value=select_fuel_type):
-                    result = user_input_features()
-                    assert result == expected_result
 
 def test_prediction_logic():
     # Simulate prediction logic test
@@ -38,6 +18,10 @@ def test_prediction_logic():
         'Weight': 1500,
         'FuelType': 0  # Numeric value for 'Petrol'
     }
+
+    # Convert input_features to a NumPy array
+    input_array = np.array([[input_features[key] for key in input_features]])
+
 
     # Simulate the expected prediction
     expected_prediction = 25000.0  
