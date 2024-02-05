@@ -38,6 +38,14 @@ jobs:
           name: Deploy to Production
           command: |
             # e.g., deploy your app using a specific script or command
+
+      - run:
+          name: Install Streamlit
+          command: |
+            pip install streamlit
+      - run:
+          name: Run Streamlit
+          command: |
             streamlit run app.py --server.address 127.0.0.1 --server.port 8501
             
   test_and_deploy:
