@@ -35,7 +35,7 @@ class TestToyotaCarPricePredictionApp(unittest.TestCase):
         input_df = pd.DataFrame(input_data, index=[0])
 
         # Load your model (this depends on how you've saved your model)
-        model_filename = 'models/random_forest_model.pkl'  # Adjust the filename accordingly
+        model_filename = 'models/random forest_model.pkl'  # Adjust the filename accordingly
         with open(model_filename, 'rb') as model_file:
             model = pickle.load(model_file)
 
