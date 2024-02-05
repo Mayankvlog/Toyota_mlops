@@ -52,6 +52,13 @@ jobs:
           name: Install dependencies
           command: |
             pip install -r requirements.txt
+
+      - run:
+          name: Run tests
+          command: |
+            pytest --junitxml=/app/test-report/test-results.xml
+            coverage run -m unittest discover tests/
+            
       - run:
           name: Deploy to Production
           command: |
