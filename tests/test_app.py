@@ -1,6 +1,5 @@
-# tests/test_app.py
 import pytest
-from ..app import user_input_features, predict_price
+from app import user_input_features, predict_price
 
 # Mocking a sample DataFrame
 @pytest.fixture
