@@ -27,5 +27,5 @@ def test_prediction_logic():
     expected_prediction = 25000.0  
 
     # Make the prediction
-    prediction = model.predict(input_features)
+    prediction = model.predict(input_array)
     assert prediction[0] == expected_prediction
