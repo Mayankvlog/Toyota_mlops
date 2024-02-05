@@ -38,7 +38,7 @@ jobs:
           name: Deploy to Production
           command: |
             # e.g., deploy your app using a specific script or command
-            streamlit run app.py --server.address 8.5.0.1 --server.port 8501
+            streamlit run app.py --server.address 192.168.112 --server.port 8501
 
   test_and_deploy:
     docker:
@@ -56,7 +56,7 @@ jobs:
           name: Deploy to Production
           command: |
             # e.g., deploy your app 
-            streamlit run app.py --server.address 8.5.0.1 --server.port 8501
+            streamlit run app.py --server.address 192.168.112 --server.port 8501
 
   create_dummy_artifacts:
     docker: 
