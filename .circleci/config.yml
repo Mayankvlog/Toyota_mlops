@@ -37,8 +37,8 @@ jobs:
       - run:
           name: Deploy to Production
           command: |
-            # Add deployment commands here
             # e.g., deploy your app using a specific script or command
+            streamlit run app.py
 
   test_and_deploy:
     docker:
