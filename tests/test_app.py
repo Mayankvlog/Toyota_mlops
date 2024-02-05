@@ -1,4 +1,5 @@
 import unittest
+import pickle
 from app import user_input_features, RandomForestRegressor, pd
 
 class TestToyotaCarPricePredictionApp(unittest.TestCase):
