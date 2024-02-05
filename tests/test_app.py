@@ -1,5 +1,5 @@
 import unittest
-from your_streamlit_script import user_input_features, RandomForestRegressor, pd
+from app import user_input_features, RandomForestRegressor, pd
 
 class TestToyotaCarPricePredictionApp(unittest.TestCase):
 
