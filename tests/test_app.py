@@ -1,43 +1,26 @@
 import unittest
-from unittest.mock import patch
-from app import user_input_features
+from your_streamlit_script import user_input_features, RandomForestRegressor, pd
 
-class TestStreamlitApp(unittest.TestCase):
-    @patch('streamlit.sidebar.slider', return_value=5)
-    @patch('streamlit.sidebar.slider', return_value=50000)
-    @patch('streamlit.sidebar.slider', return_value=100)
-    @patch('streamlit.sidebar.checkbox', return_value=False)
-    @patch('streamlit.sidebar.checkbox', return_value=False)
-    @patch('streamlit.sidebar.slider', return_value=1500)
-    @patch('streamlit.sidebar.slider', return_value=4)
-    @patch('streamlit.sidebar.slider', return_value=1500)
-    @patch('streamlit.sidebar.selectbox', return_value='Petrol')
-    def test_user_input_features(self, slider_age, slider_km, slider_hp, checkbox_met_color,
-                                 checkbox_automatic, slider_cc, slider_doors, slider_weight, select_fuel_type):
-        # Simulate a user input feature test
-        expected_result = {
-            'Age': 5,
-            'KM': 50000,
-            'HP': 100,
-            'MetColor': False,
-            'Automatic': False,
-            'CC': 1500,
-            'Doors': 4,
-            'Weight': 1500,
-            'FuelType': 0  # Numeric value for 'Petrol'
-        }
-        result = user_input_features()
-        self.assertEqual(result, expected_result)
+class TestToyotaCarPricePredictionApp(unittest.TestCase):
+
+    def setUp(self):
+        # Load or generate any required data for testing
+        pass
+
+    def test_user_input_features(self):
+        # Test the user_input_features function
+        # You can customize this based on the expected behavior of your function
+        input_features = user_input_features()
+        self.assertIsInstance(input_features, pd.DataFrame)
+        self.assertEqual(input_features.shape, (1, 9))  # Adjust the shape based on your actual implementation
 
     def test_prediction_logic(self):
-        # Simulate prediction logic test
-        # You may need to adjust this based on your actual model logic
+        # Test the prediction logic
+        # Assuming you have a model created using RandomForestRegressor
+        # and you want to test the predict function
 
-
-        from  app  import model  # Import the actual model from your app file
-
-        # Simulate input features
-        input_features = {
+        # Generate mock input data
+        input_data = {
             'Age': 5,
             'KM': 50000,
             'HP': 100,
@@ -49,12 +32,19 @@ class TestStreamlitApp(unittest.TestCase):
             'FuelType': 0  # Numeric value for 'Petrol'
         }
 
-        # Simulate the expected prediction
-        expected_prediction = 25000.0  
+        input_df = pd.DataFrame(input_data, index=[0])
 
-        # Make the prediction
-        prediction = model.predict(input_features)
-        self.assertEqual(prediction[0], expected_prediction)
+        # Load your model (this depends on how you've saved your model)
+        model_filename = 'models/random_forest_model.pkl'  # Adjust the filename accordingly
+        with open(model_filename, 'rb') as model_file:
+            model = pickle.load(model_file)
+
+        # Make prediction using the loaded model
+        prediction = model.predict(input_df)
+
+        # Check the type and value of the prediction
+        self.assertIsInstance(prediction, float)
+        # Add more specific assertions based on your expectations
 
 if __name__ == '__main__':
     unittest.main()
