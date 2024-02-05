@@ -13,12 +13,14 @@ jobs:
           name: Install dependencies
           command: |
             pip install -r requirements.txt
+            
       - run:
           name: Run tests and generate JUnit XML report
           command: |
             pytest --junitxml=/app/test-report/test-results.xml
             coverage run -m unittest discover tests/
             coverage html -d coverage_html
+            
       - persist_to_workspace:
           root: /app
           paths:
@@ -58,7 +60,7 @@ jobs:
           command: |
             pytest --junitxml=/app/test-report/test-results.xml
             coverage run -m unittest discover tests/
-            
+            coverage html -d coverage_html
       - run:
           name: Deploy to Production
           command: |
