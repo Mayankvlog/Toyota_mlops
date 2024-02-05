@@ -1,6 +1,6 @@
 # test_app.py
 import pytest
-from your_project.app.app import user_input_features, predict_price
+from app import user_input_features, predict_price
 
 def test_user_input_features():
     # Write your test for user_input_features function
