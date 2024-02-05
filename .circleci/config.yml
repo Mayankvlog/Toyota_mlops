@@ -55,8 +55,8 @@ jobs:
       - run:
           name: Deploy to Production
           command: |
-            # Add deployment commands here
             # e.g., deploy your app 
+            streamlit run app.py 
 
   create_dummy_artifacts:
     docker: 
