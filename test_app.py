@@ -6,6 +6,6 @@ def test_user_input_features():
     # Write your test for user_input_features function
     pass
 
-def test_predict_price():
+def test_predict_price(model, df):
     # Write your test for predict_price function
     pass
