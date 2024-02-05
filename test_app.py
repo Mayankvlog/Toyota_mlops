@@ -1,6 +1,6 @@
-import pytest
+#import pytest
 import numpy as np
-from app import user_input_features, model
+#from app import user_input_features, model
 
 def test_prediction_logic():
     # Simulate prediction logic test
