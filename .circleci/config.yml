@@ -13,6 +13,12 @@ jobs:
           name: Install dependencies
           command: |
             pip install -r requirements.txt
+
+      - run:
+          name: Install pytest and coverage
+          command: |
+            pip install pytest coverage
+            
             
       - run:
           name: Run tests and generate JUnit XML report
@@ -54,6 +60,12 @@ jobs:
           name: Install dependencies
           command: |
             pip install -r requirements.txt
+
+      - run:
+          name: Install pytest and coverage
+          command: |
+            pip install pytest coverage
+            
 
       - run:
           name: Run tests
