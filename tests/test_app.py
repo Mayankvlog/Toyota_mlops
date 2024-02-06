@@ -15,6 +15,11 @@ def test_user_input_features():
     }[label]
 
     # Call the function and check if it returns the expected DataFrame
+    # Call the function and check if it returns the expected DataFrame
+    try:
+        result = user_input_features()
+    except KeyError as e:
+        print(f"KeyError: {e} occurred for label: {label}")
     result = user_input_features()
     expected_result = pd.DataFrame({
         'Age': [5],
