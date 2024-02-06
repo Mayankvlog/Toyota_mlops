@@ -18,7 +18,6 @@ jobs:
       - run:
           name: Run tests
           command: |
-            . venv/bin/activate
             pytest
             coverage xml -o coverage/coverage.xml
 
