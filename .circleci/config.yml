@@ -13,9 +13,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get install python3-venv
-            python3 -m venv venv
-            . venv/bin/activate
             pip install -r requirements.txt
 
       - run:
@@ -64,7 +61,6 @@ jobs:
       - run:
           name: Deploy to production
           command: |
-            . venv/bin/activate
             ssh user@127.0.0.1 "cd /path/to/deployment && git pull origin master && ./deploy.sh"
 
 workflows:
