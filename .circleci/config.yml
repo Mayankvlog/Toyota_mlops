@@ -1,87 +1,178 @@
 version: 2.1
 
 jobs:
-  test:
+  build:
     docker:
-      - image: circleci/python:3.8
+      - image: python:3.8
 
-    working_directory: ~/repo
+    working_directory: /app
 
     steps:
       - checkout
-
       - run:
           name: Install dependencies
           command: |
             pip install -r requirements.txt
 
       - run:
-          name: Run tests
+          name: Install pytest and coverage
           command: |
-            pytest
-            coverage xml -o coverage/coverage.xml
-
-  store-artifacts:
-    docker:
-      - image: circleci/python:3.8
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
+            pip install pytest coverage
+            
+            
       - run:
-          name: Store artifacts
+          name: Run tests and generate JUnit XML report
           command: |
-            mkdir -p ~/artifacts
-            cp scatter_plot.html ~/artifacts
-            cp pie_plot.html ~/artifacts
-            cp bar_plot.html ~/artifacts
-            cp line_plot.html ~/artifacts
-
+            pytest --junitxml=/app/test-report/test-results.xml
+            coverage run -m unittest discover tests/
+            coverage html -d coverage_html
+            
       - persist_to_workspace:
-          root: ~/artifacts
+          root: /app
           paths:
-            - .
+            - models/
+            - coverage_html/
+            - test-report/
 
   deploy:
     docker:
-      - image: circleci/python:3.8
+      - image: python:3.8
 
-    working_directory: ~/repo
+    working_directory: /app
 
     steps:
       - checkout
+      - run:
+          name: Deploy to Production
+          command: |
+            # e.g., deploy your app using a specific script or command
 
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:5lFrf/UP0g00QTx7+i7SVeYR5cMlBtfzjCGXoJMWXTY"
+            
+  test_and_deploy:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r requirements.txt
 
       - run:
-          name: Deploy to production
+          name: Install pytest and coverage
           command: |
-            ssh user@127.0.0.1 "cd /path/to/deployment && git pull origin master && ./deploy.sh"
+            pip install pytest coverage
+            
+
+      - run:
+          name: Run tests
+          command: |
+            pytest --junitxml=/app/test-report/test-results.xml
+            coverage run -m unittest discover tests/
+            coverage html -d coverage_html
+      - run:
+          name: Deploy to Production
+          command: |
+            # e.g., deploy your app
+
+  create_dummy_artifacts:
+    docker: 
+      - image: alpine
+
+    working_directory: /dummy
+
+    steps:
+      - run:
+          name: Creating Dummy Artifacts
+          command: |
+            mkdir -p /dummy/artifacts
+            echo "Dummy Artifact Content" > /dummy/artifacts/dummy.txt
+      - store_artifacts:
+          path: /dummy/artifacts/dummy.txt
+          destination: dummy-artifact
+      - run:
+          name: Install curl
+          command: apk --no-cache add curl
+      - run:
+          name: Download and Store Artifacts
+          command: |
+            #curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
+            curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
+                 -o artifact.zip \
+                 -LJO \
+                 "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
+
+  merge_results:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - attach_workspace:
+          at: /app
+      - run:
+          name: Merge Test Results
+          command: |
+            mkdir -p /app/test-report
+            find /app -name 'test-results*.xml' -exec cat {} + > /app/test-report/all-results.xml
+      - store_test_results:
+          path: /app/test-report
+
+  download_and_store_test_results:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - run:
+          name: Download and Store test_results
+          command: |
+            apt-get update
+            apt-get install -y curl
+            #curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
+            curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
+                 -o test_results.xml \
+                 -LJO \
+                 "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
 
 workflows:
   version: 2
-
-  build-and-deploy:
+  build_and_test:
     jobs:
-      - test:
+      - test_and_deploy:
           filters:
             branches:
               only:
                 - master
-
-      - store-artifacts:
-          filters:
-            branches:
-              only:
-                - master
-
       - deploy:
           requires:
-            - store-artifacts
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
+      - create_dummy_artifacts:  
+          requires:
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
+      - merge_results:
+          requires:
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
+      - download_and_store_test_results:
+          requires:
+            - create_dummy_artifacts
           filters:
             branches:
               only:
