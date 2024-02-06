@@ -1,179 +1,49 @@
 version: 2.1
 
 jobs:
-  build:
+  test:
     docker:
       - image: python:3.8
-
-    working_directory: /app
-
     steps:
       - checkout
       - run:
           name: Install dependencies
-          command: |
-            pip install -r requirements.txt
-
-      - run:
-          name: Install pytest and coverage
-          command: |
-            pip install pytest coverage
-            
-            
-      - run:
-          name: Run tests and generate JUnit XML report
-          command: |
-            pytest --junitxml=/app/test-report/test-results.xml
-            coverage run -m unittest discover tests/
-            coverage html -d coverage_html
-            
-      - persist_to_workspace:
-          root: /app
-          paths:
-            - models/
-            - coverage_html/
-            - test-report/
-
-  deploy:
-    docker:
-      - image: python:3.8
-
-    working_directory: /app
-
-    steps:
-      - checkout
-      - run:
-          name: Deploy to Production
-          command: |
-            # e.g., deploy your app using a specific script or command
-
-            
-  test_and_deploy:
-    docker:
-      - image: python:3.8
-
-    working_directory: /app
-
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            pip install -r requirements.txt
-
-      - run:
-          name: Install pytest and coverage
-          command: |
-            pip install pytest coverage
-            
-
+          command: pip install -r requirements.txt
       - run:
           name: Run tests
-          command: |
-            pytest --junitxml=/app/test-report/test-results.xml
-            coverage run -m unittest discover tests/
-            coverage html -d coverage_html
-      - run:
-          name: Deploy to Production
-          command: |
-            # e.g., deploy your app
-
-  create_dummy_artifacts:
-    docker: 
-      - image: alpine
-
-    working_directory: /dummy
-
+          command: pytest
+      - store_test_results:
+          path: /tmp/test-results
+  deploy:
+    docker:
+      - image: lambdatest/python-node
     steps:
+      - checkout
       - run:
-          name: Creating Dummy Artifacts
-          command: |
-            mkdir -p /dummy/artifacts
-            echo "Dummy Artifact Content" > /dummy/artifacts/dummy.txt
-      - store_artifacts:
-          path: /dummy/artifacts/dummy.txt
-          destination: dummy-artifact
-      - run:
-          name: Install curl
-          command: apk --no-cache add curl
-      - run:
-          name: Download and Store Artifacts
-          command: |
-            #curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
-            curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
-                 -o artifact.zip \
-                 -LJO \
-                 "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
-
-  merge_results:
+          name: Deploy to LambdaTest
+          command: ./deploy.sh
+  save_artifacts:
     docker:
       - image: python:3.8
-
-    working_directory: /app
-
     steps:
       - attach_workspace:
-          at: /app
+          at: /tmp/workspace
       - run:
-          name: Merge Test Results
-          command: |
-            mkdir -p /app/test-report
-            find /app -name 'test-results*.xml' -exec cat {} + > /app/test-report/all-results.xml
-      - store_test_results:
-          path: /app/test-report
-
-  download_and_store_test_results:
-    docker:
-      - image: python:3.8
-
-    working_directory: /app
-
-    steps:
-      - run:
-          name: Download and Store test_results
-          command: |
-            apt-get update
-            apt-get install -y curl
-            #curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
-            curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
-                 -o test_results.xml \
-                 -LJO \
-                 "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
+          name: Save artifacts
+          command: cp -r /tmp/workspace/* /tmp/artifacts
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - artifacts
 
 workflows:
   version: 2
-  build_and_test:
+  build-and-deploy:
     jobs:
-      - test_and_deploy:
-          filters:
-            branches:
-              only:
-                - master
+      - test
       - deploy:
           requires:
-            - test_and_deploy
-          filters:
-            branches:
-              only:
-                - master
-      - create_dummy_artifacts:  
+            - test
+      - save_artifacts:
           requires:
-            - test_and_deploy
-          filters:
-            branches:
-              only:
-                - master
-      - merge_results:
-          requires:
-            - test_and_deploy
-          filters:
-            branches:
-              only:
-                - master
-      - download_and_store_test_results:
-          requires:
-            - create_dummy_artifacts
-          filters:
-            branches:
-              only:
-                - master
+            - deploy
