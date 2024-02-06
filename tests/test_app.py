@@ -10,7 +10,7 @@ def test_user_input_features():
         'KM': 50000,
         'HP': 100,
         'CC': 1500,
-        'Doors': 4,
+        'Number of Doors': 4,  
         'Weight': 1500
     }[label]
 
@@ -25,7 +25,7 @@ def test_user_input_features():
         'CC': [1500],
         'Doors': [4],
         'Weight': [1500],
-        'FuelType': [0]  # Assuming the default selection is 'Petrol'
+        'FuelType': [0]  
     })
 
     pd.testing.assert_frame_equal(result, expected_result)
