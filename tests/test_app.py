@@ -1,51 +1,26 @@
-import unittest
-import pickle
-from app import user_input_features, RandomForestRegressor, pd
+import pytest
+import pandas as pd
+import streamlit as st
+from app import user_input_features
 
-class TestToyotaCarPricePredictionApp(unittest.TestCase):
+def test_user_input_features():
+    # You might need to mock some Streamlit components if needed
+    # For simplicity, let's assume st.sidebar.slider always returns 5
+    st.sidebar.slider = lambda *args, **kwargs: 5
 
-    def setUp(self):
-        # Load or generate any required data for testing
-        pass
+    # Call the function and check if it returns the expected DataFrame
+    result = user_input_features()
+    expected_result = pd.DataFrame({
+        'Age': [5],
+        'KM': [50000],
+        'HP': [100],
+        'MetColor': [False],
+        'Automatic': [False],
+        'CC': [1500],
+        'Doors': [4],
+        'Weight': [1500],
+        'FuelType': [0]  # Assuming the default selection is 'Petrol'
+    })
 
-    def test_user_input_features(self):
-        # Test the user_input_features function
-        # You can customize this based on the expected behavior of your function
-        input_features = user_input_features()
-        self.assertIsInstance(input_features, pd.DataFrame)
-        self.assertEqual(input_features.shape, (1, 9))  # Adjust the shape based on your actual implementation
+    pd.testing.assert_frame_equal(result, expected_result)
 
-    def test_prediction_logic(self):
-        # Test the prediction logic
-        # Assuming you have a model created using RandomForestRegressor
-        # and you want to test the predict function
-
-        # Generate mock input data
-        input_data = {
-            'Age': 5,
-            'KM': 50000,
-            'HP': 100,
-            'MetColor': False,
-            'Automatic': False,
-            'CC': 1500,
-            'Doors': 4,
-            'Weight': 1500,
-            'FuelType': 0  # Numeric value for 'Petrol'
-        }
-
-        input_df = pd.DataFrame(input_data, index=[0])
-
-        # Load your model (this depends on how you've saved your model)
-        model_filename = 'models/random forest_model.pkl'  # Adjust the filename accordingly
-        with open(model_filename, 'rb') as model_file:
-            model = pickle.load(model_file)
-
-        # Make prediction using the loaded model
-        prediction = model.predict(input_df)
-
-        # Check the type and value of the prediction
-        self.assertIsInstance(prediction, float)
-        # Add more specific assertions based on your expectations
-
-if __name__ == '__main__':
-    unittest.main()
