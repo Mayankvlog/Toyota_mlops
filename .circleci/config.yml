@@ -3,7 +3,9 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: lambdatest/python:3.8
+      - image: circleci/python:3.8
+
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -11,35 +13,23 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            sudo apt-get install python3-venv
+            python3 -m venv venv
+            . venv/bin/activate
             pip install -r requirements.txt
 
       - run:
           name: Run tests
           command: |
+            . venv/bin/activate
             pytest
-
-      - store_test_results:
-          path: /path/to/test/reports
-
-  deploy:
-    docker:
-      - image: lambdatest/python:3.8
-
-    steps:
-      - checkout
-
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:5lFrf/UP0g00QTx7+i7SVeYR5cMlBtfzjCGXoJMWXTY"
-
-      - run:
-          name: Deploy to production
-          command: |
-            ssh user@your-server "cd /path/to/deployment && git pull origin master && ./deploy.sh"
+            coverage xml -o coverage/coverage.xml
 
   store-artifacts:
     docker:
-      - image: lambdatest/python:3.8
+      - image: circleci/python:3.8
+
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -58,6 +48,25 @@ jobs:
           paths:
             - .
 
+  deploy:
+    docker:
+      - image: circleci/python:3.8
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:5lFrf/UP0g00QTx7+i7SVeYR5cMlBtfzjCGXoJMWXTY"
+
+      - run:
+          name: Deploy to production
+          command: |
+            . venv/bin/activate
+            ssh user@127.0.0.1 "cd /path/to/deployment && git pull origin master && ./deploy.sh"
+
 workflows:
   version: 2
 
@@ -69,17 +78,15 @@ workflows:
               only:
                 - master
 
-      - deploy:
-          requires:
-            - test
+      - store-artifacts:
           filters:
             branches:
               only:
                 - master
 
-      - store-artifacts:
+      - deploy:
           requires:
-            - test
+            - store-artifacts
           filters:
             branches:
               only:
