@@ -63,8 +63,7 @@ jobs:
 
       - run:
           name: Create Netlify package.json
-          command: |
-            printf > /app/package.json '%s' '{"name": "netlify-app", "version": "1.0.0", "scripts": {"build": "echo \'Build command placeholder\'"}}' > /app/package.json
+          command:  printf > /app/package.json '%s' '{"name": "netlify-app", "version": "1.0.0", "scripts": {"build": "echo \'Build command placeholder\'"}}' 
 
 
       - run:
