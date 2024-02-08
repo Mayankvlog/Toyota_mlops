@@ -64,6 +64,11 @@ jobs:
           command: node -v
 
       - run:
+          name: Create Netlify package.json
+          command: echo '{"name": "netlify-app", "version": "1.0.0", "scripts": {"build": "your-build-command"}}' > /app/package.json
+
+
+      - run:
           name: Install Dependencies
           command: |
             cd /app
