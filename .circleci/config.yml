@@ -71,7 +71,7 @@ jobs:
           name: Install Dependencies
           command: |
             cd /app
-            npm install
+            npm install --unsafe-perm
 
       - run:
           name: Build and Test
