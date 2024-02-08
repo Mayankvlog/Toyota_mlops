@@ -43,11 +43,23 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Deploy to Production
+          name: Install Dependencies
           command: |
-            # e.g., deploy your app using a specific script or command
+            npm install
 
-            
+      - run:
+          name: Build and Test
+          command: |
+            npm run build
+
+      - deploy:
+          name: Deploy to Netlify
+          command: |
+            npm install -g netlify-cli
+            netlify deploy --prod --auth $nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c
+          #name: Deploy to Production
+          #command: |
+            # e.g., deploy your app using a specific script or command
   test_and_deploy:
     docker:
       - image: python:3.8
