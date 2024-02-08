@@ -1,5 +1,4 @@
 version: 2.1
-
 jobs:
   build:
     docker:
@@ -18,7 +17,6 @@ jobs:
           name: Install pytest and coverage
           command: |
             pip install pytest coverage
-            
             
       - run:
           name: Run tests and generate JUnit XML report
@@ -65,8 +63,8 @@ jobs:
 
       - run:
           name: Create Netlify package.json
-          command: > 
-            printf '{"name": "netlify-app", "version": "1.0.0", "scripts": {"build": "echo \'Build command placeholder\'"}}' > /app/package.json
+          command:|
+            printf > /app/package.json '%s' '{"name": "netlify-app", "version": "1.0.0", "scripts": {"build": "echo \'Build command placeholder\'"}}' > /app/package.json
 
 
       - run:
