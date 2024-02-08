@@ -45,11 +45,13 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            npm install
+            apt-get update
+            apt-get install -y nodejs npm
 
       - run:
           name: Build and Test
           command: |
+            npm install
             npm run build
 
       - deploy:
