@@ -36,7 +36,7 @@ jobs:
 
   deploy:
     docker:
-      - image: python:3.8
+      - image: node:14
 
     working_directory: /app
 
@@ -48,15 +48,18 @@ jobs:
             apt-get update
             apt-get install -y nodejs npm
 
-      - attach_workspace:
-          at: /app
+      - run:
+          name: Install Dependencies
+          command: |
+            cd /app
+            npm install
 
       - run:
           name: Build and Test
           command: |
             cd /app
-            npm install
             npm run build
+
 
       - deploy:
           name: Deploy to Netlify
