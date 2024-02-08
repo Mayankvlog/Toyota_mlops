@@ -70,7 +70,7 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            cd /app
+             cd /app
             npm install
 
       - run:
