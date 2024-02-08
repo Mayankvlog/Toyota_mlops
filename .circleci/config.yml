@@ -48,15 +48,20 @@ jobs:
             apt-get update
             apt-get install -y nodejs npm
 
+      - attach_workspace:
+          at: /app
+
       - run:
           name: Build and Test
           command: |
+            cd /app
             npm install
             npm run build
 
       - deploy:
           name: Deploy to Netlify
           command: |
+            cd /app
             npm install -g netlify-cli
             netlify deploy --prod --auth $nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c
           #name: Deploy to Production
