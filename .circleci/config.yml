@@ -43,6 +43,17 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Debug
+          command: |
+            pwd
+            ls -l
+            ls -l /app
+
+      - run:
+          name: Check npm Version
+          command: npm -v
+
+      - run:
           name: Install Dependencies
           command: |
             apt-get update
