@@ -54,7 +54,7 @@ jobs:
           command: npm -v
 
       - run:
-          name:check node Version
+          name: Check node Version
           command: node -v
 
       - run:
