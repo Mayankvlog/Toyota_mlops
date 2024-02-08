@@ -54,6 +54,10 @@ jobs:
           command: npm -v
 
       - run:
+          name:check node Version
+          command: node -v
+
+      - run:
           name: Install Dependencies
           command: |
             apt-get update
