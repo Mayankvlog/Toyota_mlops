@@ -83,7 +83,7 @@ jobs:
             #npm cache clean -f
             #npm install -g  netlify-cli  --unsafe-perm=true --allow-root
             npm install -g netlify-cli@latest --unsafe-perm=true --allow-root
-            netlify deploy --prod --auth  nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c  
+            echo -e "y\n" | netlify deploy --prod --auth  nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c  
           #name: Deploy to Production
           #command: |
             # e.g., deploy your app using a specific script or command
