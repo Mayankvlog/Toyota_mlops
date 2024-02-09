@@ -81,7 +81,7 @@ jobs:
             cd /app
             #npm cache clean -f
             npm install -g  netlify-cli
-            netlify deploy --prod --auth  nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c
+            netlify deploy --prod --auth  nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c  --unsafe-perm
           #name: Deploy to Production
           #command: |
             # e.g., deploy your app using a specific script or command
