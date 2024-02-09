@@ -82,6 +82,7 @@ jobs:
             cd /app
             #npm install -g  netlify-cli  --unsafe-perm=true --allow-root
             npm install -g netlify-cli@latest --unsafe-perm=true --allow-root
+            export NETLIFY_AUTO=1
             netlify deploy --prod --auth  nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c  -d .
           #name: Deploy to Production
           #command: |
