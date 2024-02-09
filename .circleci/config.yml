@@ -34,7 +34,7 @@ jobs:
 
   deploy:
     docker:
-      - image: node:14
+      - image: node:18
 
     working_directory: /app
 
