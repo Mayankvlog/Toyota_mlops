@@ -80,7 +80,7 @@ jobs:
           command: |
             cd /app
             npm install -g netlify-cli@latest 
-            netlify deploy --prod --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji
+            netlify deploy --prod --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji  --site 5fbd92ef-f248-4a77-8264-2ee01012dc77 -d .
             
   test_and_deploy:
     docker:
