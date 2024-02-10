@@ -51,7 +51,6 @@ jobs:
           name: Install Node.js and npm
           command: |
             apt-get update
-            #curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
             apt-get install -y nodejs npm
 
       - run:
@@ -81,7 +80,7 @@ jobs:
           command: |
             cd /app
             #npm install -g  netlify-cli  --unsafe-perm=true --allow-root
-            npm install -g netlify-cli@latest --unsafe-perm=true --allow-root
+            npm install -g netlify-cli@latest 
             export NETLIFY_AUTH_TOKEN="nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c"
             netlify deploy --prod --auth -d .
           #name: Deploy to Production
