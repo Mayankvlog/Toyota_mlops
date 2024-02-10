@@ -79,14 +79,9 @@ jobs:
           name: Deploy to Netlify
           command: |
             cd /app
-            #npm install -g  netlify-cli  --unsafe-perm=true --allow-root
             npm install -g netlify-cli@latest 
-            #export NETLIFY_AUTH_TOKEN="nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c"
-            #netlify deploy --prod --auth -d .
-            netlify deploy --prod --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c --site 5fbd92ef-f248-4a77-8264-2ee01012dc77 -d .
-          #name: Deploy to Production
-          #command: |
-            # e.g., deploy your app using a specific script or command
+            netlify deploy --prod --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji
+            
   test_and_deploy:
     docker:
       - image: python:3.8
@@ -132,17 +127,17 @@ jobs:
       - store_artifacts:
           path: /dummy/artifacts/dummy.txt
           destination: dummy-artifact
-      - run:
-          name: Install curl
-          command: apk --no-cache add curl
-      - run:
-          name: Download and Store Artifacts
-          command: |
+     # - run:
+     #     name: Install curl
+     #     command: apk --no-cache add curl
+     # - run:
+     #     name: Download and Store Artifacts
+     #     command: |
             #curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
-            curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
-                 -o artifact.zip \
-                 -LJO \
-                 "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
+     #       curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
+     #            -o artifact.zip \
+     #            -LJO \
+     #            "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
 
   merge_results:
     docker:
