@@ -74,7 +74,6 @@ jobs:
           name: Build and Test
           command: npm run build
 
-
       - deploy:
           name: Deploy to Netlify
           command: |
@@ -173,13 +172,19 @@ jobs:
       - store_test_results:
           path: /app/test-report
 
-  #download_and_store_test_results:
-  #  docker:
-  #    - image: python:3.8
+  download_and_store_test_results:
+    docker:
+      - image: python:3.8
 
-  #  working_directory: /app
+    working_directory: /app
 
-  #steps:
+    steps:
+      - attach_workspace:
+          at: /app
+      - run:
+          name: Display Test Results
+          command: cat /app/test-report/test_results.xml
+  
   #    - run:
   #        name: Download and Store test_results
   #        command: |
