@@ -81,7 +81,7 @@ jobs:
             cd /app
             #npm install -g netlify-cli@latest 
             npm install -g netlify-cli
-            npm install --loglevel=error
+            #npm install --loglevel=error
             npm fund
             npm audit
             npm audit fix
