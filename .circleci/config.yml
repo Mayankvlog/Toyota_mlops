@@ -166,7 +166,7 @@ jobs:
           name: Download and Store test_results
           command: |
             mkdir -p /app/test-report
-            curl -o /app/test-report/test_results.xml \
+            curl -o /app/test-report/test-results.xml \
               -LJO "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
 
       - store_test_results:
@@ -183,7 +183,7 @@ jobs:
           at: /app
       - run:
           name: Display Test Results
-          command: cat /app/test-report/test_results.xml
+          command: cat /app/test-report/test-results.xml
   
   #    - run:
   #        name: Download and Store test_results
