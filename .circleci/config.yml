@@ -162,6 +162,16 @@ jobs:
       - store_test_results:
           path: /app/test-report
 
+      - run:
+          name: Download and Store test_results
+          command: |
+            mkdir -p /app/test-report
+            curl -o /app/test-report/test_results.xml \
+              -LJO "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
+
+      - store_test_results:
+          path: /app/test-report
+
   #download_and_store_test_results:
   #  docker:
   #    - image: python:3.8
