@@ -82,9 +82,9 @@ jobs:
             #npm install -g netlify-cli@latest 
             npm install -g netlify-cli
             #npm install --loglevel=error
-            npm urix@0.1.0
-            npm source-map-resolve@0.5.3
-            npm resolve-url@0.2.1
+            npm urix@latest
+            npm source-map-resolve@latest
+            npm resolve-url@latest
             npm fund
             npm audit
             npm audit fix
