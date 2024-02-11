@@ -128,13 +128,14 @@ jobs:
       - store_artifacts:
           path: /dummy/artifacts/dummy.txt
           destination: dummy-artifact
-     # - run:
-     #     name: Install curl
-     #     command: apk --no-cache add curl
-     # - run:
-     #     name: Download and Store Artifacts
-     #     command: |
-            #curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
+      - run:
+          name: Install curl
+          command: apk --no-cache add curl
+      - run:
+          name: Download and Store Artifacts
+          command: |
+           curl -O "https://circleci-tasks-prod.s3.us-east-1.amazonaws.com/storage/artifacts/84d017bc-2a0d-4828-9289-4a4d981a4951/c9dbcf30-0391-4786-8c47-98bd05d6c293/0/dummy-artifact?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQVFQINEON36FFZH2%2F20240211%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240211T045943Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGUaCXVzLWVhc3QtMSJIMEYCIQDMmzmf7o0Etbe76SbQc0ggDCD5riiQpImiSfK3PmEoXwIhANN5D397tVgWr%2BLn169t4DvOT1bWasA1WbIMFDnHsH99KqsCCD4QAxoMMDQ1NDY2ODA2NTU2Igz8f8NpmfW%2FFPJo3lQqiAK1eAPkCOOMwzpDuDlm52w3JzqTPj7NmrW48%2Bw%2Fe%2FKP68HOmxMVRd9LP8m6f01lXI8DYcoILTxzfEXw5cWH7M2SarPHqCOFDIlyp%2F6FsI%2BB0mo9ZI8WKgghYDtzKK8e5aWcTObdwEoLiIbf%2BZoAL0qOC7r46bAvPIRAYoHYxBoS2XI57zI%2B1rGzsGhl0UpLc7FBGTwL%2BGzzgSqFUboP2aCTfe%2F5bw7UP49%2FqGW0BfoYtNduMYGskBrURFk1M7kdDAyfIoeKWuagpkTYZ%2FUaClOn2d1QJNGJBqPj9YEg6bhhG8YAfR676lAW1wH4c%2Fw%2Bm7DkbCboUfrac3zk2wde5JfrmGoSOA0ctvEwu6ehrgY6nAFrmDf4yWessay0w3Z1HOKZ6YIMgRQGzwTpBv9DlpClzvAZnyhiDpe778WxsCU9nplfotqo2XN0%2Bu%2Fp94trfs5SuN%2Bog07%2FKLS%2FTC2803A3%2BV5kmtj7gtfKmvMtXAkWJRadkwAmvt3fnOqfFaVqgwWUhYLvmSsoybqzErgbm7ymAp1qtoXXKjHcR2o21c0L%2F2jBa%2Bd7TWOUmd6U8Rw%3D&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=725d88419cb939b00905aefed6021251c107c2caf28cb14d8aae120f27593b49"
+
      #       curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
      #            -o artifact.zip \
      #            -LJO \
