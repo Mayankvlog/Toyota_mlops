@@ -81,6 +81,7 @@ jobs:
             cd /app
             npm install -g netlify-cli@latest 
             npm install --loglevel=error
+            npm fund
             netlify deploy --prod --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c --site e15a2423-94e5-47a5-afb1-52c8de8dd80a -d .
             
   test_and_deploy:
