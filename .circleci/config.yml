@@ -80,9 +80,6 @@ jobs:
             cd /app
             #npm install -g netlify-cli@latest 
             npm install -g netlify-cli
-            #npm install --loglevel=error
-            #npm urix source-map-resolve resolve-url
-            #npm install urix@latest source-map-resolve@latest resolve-url@latest
             npm fund
             npm audit
             npm audit fix
@@ -197,8 +194,8 @@ jobs:
 
       - run:
           name: Display File Permissions
-          #command: ls -l /app/test-report/test-results.xml
-          command: ls /app/test-report/test-results.xml
+          command: ls -l /app/test-report/test-results.xml
+          #command: ls /app/test-report/test-results.xml        
 
       - run:
           name: Display Test Results
