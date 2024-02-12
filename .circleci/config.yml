@@ -191,6 +191,7 @@ jobs:
       - run:
           name: Debugging Output
           command: |
+            pwd
             ls -R /app/test-report/
             find /app -name 'test-results.xml'
 
