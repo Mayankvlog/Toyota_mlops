@@ -45,7 +45,7 @@ jobs:
             # Add Netlify deployment steps here
             # For example, use Netlify CLI to deploy your app
             npm install -g netlify-cli
-            netlify deploy --prod --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c
+            netlify deploy --prod
 
 workflows:
   version: 2
