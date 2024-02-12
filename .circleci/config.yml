@@ -198,7 +198,7 @@ jobs:
       - run:
           name: Display File Permissions
           #command: ls -l /app/test-report/test-results.xml
-          command: ls -l /app/test-report/test-results.xml
+          command: ls /app/test-report/test-results.xml
 
       - run:
           name: Display Test Results
