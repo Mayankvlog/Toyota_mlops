@@ -200,7 +200,7 @@ jobs:
 
       - run:
           name: Display Test Results
-          command: cat /app/test-report/test-results.xml
+          command: ls -R /app/test-report/test-results.xml
 
       - store_test_results:
           path: /app/test-report  
