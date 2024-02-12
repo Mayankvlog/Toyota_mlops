@@ -181,17 +181,20 @@ jobs:
     steps:
       - attach_workspace:
           at: /app
+      #- run:
+      #    name: List contents of /app/test-report
+      #    command: ls -R /app/test-report/
       - run:
-          name: List contents of /app/test-report
-          command: ls -R /app/test-report/
-
+          name: Create test-report directory
+          command: mkdir -p /app/test-report/
+          
       - run:
           name: Debugging Output
           command: |
-            #ls -R /app/test-report/
+            ls -R /app/test-report/
             #pwd
-            ls -R /app/
-            ls -R /dummy/artifacts/
+            #ls -R /app/
+            #ls -R /dummy/artifacts/
             find /app -name 'test-results*.xml'
 
       - run:
