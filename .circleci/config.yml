@@ -192,13 +192,11 @@ jobs:
           name: Debugging Output
           command: |
             ls -R /app/test-report/
-            #pwd
-            #ls -R /app/
-            #ls -R /dummy/artifacts/
-            find /app -name 'test-results*.xml'
+            find /app -name 'test-results.xml'
 
       - run:
           name: Display File Permissions
+          #command: ls -l /app/test-report/test-results.xml
           command: ls -l /app/test-report/test-results.xml
 
       - run:
