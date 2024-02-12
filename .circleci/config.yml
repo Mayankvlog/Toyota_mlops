@@ -195,10 +195,10 @@ jobs:
             ls -R /app/test-report/
             find /app -name 'test-results.xml'
 
-      - run:
-          name: Display File Permissions
+      #- run:
+      #    name: Display File Permissions
           #command: ls -l /app/test-report/test-results.xml
-          command: ls -l /app/test-report/test-results.xml
+      #    command: ls -l /app/test-report/test-results.xml
 
       - run:
           name: Display Test Results
