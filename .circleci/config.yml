@@ -1,7 +1,6 @@
 version: 2.1
-
 jobs:
-  test:
+  build:
     docker:
       - image: python:3.8
 
@@ -9,57 +8,246 @@ jobs:
 
     steps:
       - checkout
-
       - run:
           name: Install dependencies
           command: |
             pip install -r requirements.txt
 
       - run:
-          name: Run tests
+          name: Install pytest and coverage
           command: |
-            pytest
-
+            pip install pytest coverage
+            
+      - run:
+          name: Run tests and generate JUnit XML report
+          command: |
+            pytest --junitxml=/app/test-report/test-results.xml
+            coverage run -m unittest discover tests/
+            coverage html -d coverage_html
+            
       - persist_to_workspace:
           root: /app
           paths:
             - models/
-            - scatter_plot.html
-            - pie_plot.html
-            - bar_plot.html
-            - line_plot.html
+            - coverage_html/
+            - test-report/
 
   deploy:
     docker:
-      - image: node:14
+      - image: node:18
+
+    working_directory: /app
+
+    steps:
+      - checkout
+      - run:
+          name: Debug
+          command: |
+            pwd
+            ls -l
+            ls -l /app
+
+      - run:
+          name: Install Node.js and npm
+          command: |
+            apt-get update
+            apt-get install -y nodejs npm
+
+      - run:
+          name: Check npm Version
+          command: npm -v
+
+      - run:
+          name: Check node Version
+          command: node -v
+
+      - run:
+          name: Create Netlify package.json
+          command: >
+             echo '{"name": "netlify-app", "version": "1.0.0", "scripts": {"build": "echo '\''Build command placeholder'\''"}}' > /app/package.json
+
+      - run:
+          name: Install Dependencies
+          command: npm install --unsafe-perm
+
+      - run:
+          name: Build and Test
+          command: npm run build
+
+      - deploy:
+          name: Deploy to Netlify
+          command: |
+            cd /app
+            #npm install -g netlify-cli@latest 
+            npm install -g netlify-cli
+            npm fund
+            npm audit
+            npm audit fix
+            netlify deploy --prod --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c --site e15a2423-94e5-47a5-afb1-52c8de8dd80a -d .
+            
+  test_and_deploy:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r requirements.txt
+
+      - run:
+          name: Install pytest and coverage
+          command: |
+            pip install pytest coverage
+            
+
+      - run:
+          name: Run tests
+          command: |
+            pytest --junitxml=/app/test-report/test-results.xml
+            coverage run -m unittest discover tests/
+            coverage html -d coverage_html
+      - run:
+          name: Deploy to Production
+          command: |
+            # e.g., deploy your app
+
+  create_dummy_artifacts:
+    docker: 
+      - image: alpine
+
+    working_directory: /dummy
+
+    steps:
+      - run:
+          name: Creating Dummy Artifacts
+          command: |
+            mkdir -p /dummy/artifacts
+            echo "Dummy Artifact Content" > /dummy/artifacts/dummy.txt
+      - store_artifacts:
+          path: /dummy/artifacts/dummy.txt
+          destination: dummy-artifact
+     # - run:
+     #     name: Install curl
+     #     command: apk --no-cache add curl
+     # - run:
+     #     name: Download and Store Artifacts
+     #     command: |
+     #      curl -O "https://circleci-tasks-prod.s3.us-east-1.amazonaws.com/storage/artifacts/84d017bc-2a0d-4828-9289-4a4d981a4951/c9dbcf30-0391-4786-8c47-98bd05d6c293/0/dummy-artifact?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQVFQINEON36FFZH2%2F20240211%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240211T045943Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGUaCXVzLWVhc3QtMSJIMEYCIQDMmzmf7o0Etbe76SbQc0ggDCD5riiQpImiSfK3PmEoXwIhANN5D397tVgWr%2BLn169t4DvOT1bWasA1WbIMFDnHsH99KqsCCD4QAxoMMDQ1NDY2ODA2NTU2Igz8f8NpmfW%2FFPJo3lQqiAK1eAPkCOOMwzpDuDlm52w3JzqTPj7NmrW48%2Bw%2Fe%2FKP68HOmxMVRd9LP8m6f01lXI8DYcoILTxzfEXw5cWH7M2SarPHqCOFDIlyp%2F6FsI%2BB0mo9ZI8WKgghYDtzKK8e5aWcTObdwEoLiIbf%2BZoAL0qOC7r46bAvPIRAYoHYxBoS2XI57zI%2B1rGzsGhl0UpLc7FBGTwL%2BGzzgSqFUboP2aCTfe%2F5bw7UP49%2FqGW0BfoYtNduMYGskBrURFk1M7kdDAyfIoeKWuagpkTYZ%2FUaClOn2d1QJNGJBqPj9YEg6bhhG8YAfR676lAW1wH4c%2Fw%2Bm7DkbCboUfrac3zk2wde5JfrmGoSOA0ctvEwu6ehrgY6nAFrmDf4yWessay0w3Z1HOKZ6YIMgRQGzwTpBv9DlpClzvAZnyhiDpe778WxsCU9nplfotqo2XN0%2Bu%2Fp94trfs5SuN%2Bog07%2FKLS%2FTC2803A3%2BV5kmtj7gtfKmvMtXAkWJRadkwAmvt3fnOqfFaVqgwWUhYLvmSsoybqzErgbm7ymAp1qtoXXKjHcR2o21c0L%2F2jBa%2Bd7TWOUmd6U8Rw%3D&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=725d88419cb939b00905aefed6021251c107c2caf28cb14d8aae120f27593b49"
+     #       curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
+     #        curl -O artifact.zip \
+     #            -LJO \
+     #            "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
+
+  merge_results:
+    docker:
+      - image: python:3.8
 
     working_directory: /app
 
     steps:
       - attach_workspace:
           at: /app
+      - run:
+          name: Merge Test Results
+          command: |
+            mkdir -p /app/test-report
+            find /app -name 'test-results*.xml' -exec cat {} + > /app/test-report/all-results.xml
+      - store_test_results:
+          path: /app/test-report
 
       - run:
-          name: Deploy to Netlify
+          name: Download and Store test_results
           command: |
-            # Add Netlify deployment steps here
-            # For example, use Netlify CLI to deploy your app
-            npm install -g netlify-cli
-            netlify deploy --prod
+            mkdir -p /app/test-report
+            curl -o /app/test-report/test-results.xml \
+              -LJO "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
+
+      - store_test_results:
+          path: /app/test-report
+
+  download_and_store_test_results:
+    docker:
+      - image: python:3.8
+
+    working_directory: /app
+
+    steps:
+      - attach_workspace:
+          at: /app
+      #- run:
+      #    name: List contents of /app/test-report
+      #    command: ls -R /app/test-report/
+      - run:
+          name: Create test-report directory
+          command: mkdir -p /app/test-report/
+          
+      - run:
+          name: Debugging Output
+          command: |
+            pwd
+            ls -R /app/test-report/
+            find /app -name 'test-results.xml'
+
+      - run:
+          name: Display File Permissions
+          #command: ls -l /app/test-report/test-results.xml
+          #command: ls /app/test-report/test-results.xml 
+          command: ls -l /app/test-report/
+
+      - run:
+          name: Display Test Results
+          command: cat /app/test-report/test-results.xml
+
+      - store_test_results:
+          path: /app/test-report  
+  #    - run:
+  #        name: Download and Store test_results
+  #        command: |
+  #          apt-get update
+  #          apt-get install -y curl
+            #curl -u $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65: \
+  #          curl -H "Circle-Token: $CCIPAT_C5tBBNUuZ2Tptf71w9V22P_cd97df98b1c2917d2736d275db3401614a448d65" \
+  #               -o test_results.xml \
+  #               -LJO \
+  #               "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts"
 
 workflows:
   version: 2
-  build_and_deploy:
+  build_and_test:
     jobs:
-      - test:
+      - test_and_deploy:
           filters:
             branches:
               only:
                 - master
-
       - deploy:
           requires:
-            - test
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
+      - create_dummy_artifacts:  
+          requires:
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
+      - merge_results:
+          requires:
+            - test_and_deploy
+          filters:
+            branches:
+              only:
+                - master
+      - download_and_store_test_results:
+          requires:
+            - create_dummy_artifacts
           filters:
             branches:
               only:
