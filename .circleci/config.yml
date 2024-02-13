@@ -202,12 +202,6 @@ jobs:
           name: Display Test Results
           command: touch /app/test-report/test-results.xml
 
-      - run:
-          name: Download and Store test_results
-          command: |
-            wget -O /app/test-report/test-results.xml \
-              "https://circleci.com/api/v1.1/project/github/Mayankvlog/Toyota_mlops/latest/artifacts/test-report/test-results.xml"
-
       - store_test_results:
           path: /app/test-report  
   #    - run:
