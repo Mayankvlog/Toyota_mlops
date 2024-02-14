@@ -32,20 +32,22 @@ jobs:
       - image: python:3.8
 
     steps:
-      - attach_workspace:
-          at: /workspace
+      - run: echo "Deploying to production server"
+      #- attach_workspace:
+      #    at: /workspace
 
       # Install Streamlit
-      - run:
-          name: Install Streamlit
-          command: |
-            pip install streamlit
+      #- run:
+      #    name: Install Streamlit
+      #    command: |
+      #      pip install streamlit
 
       # Deploy Streamlit app
-      - run:
-          name: Deploy Streamlit App
-          command: |
-            streamlit run app.py &
+      #- run:
+      #    name: Deploy Streamlit App
+      #    command: |
+      #      streamlit run app.py &
+      
 
 workflows:
   version: 2
