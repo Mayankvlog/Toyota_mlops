@@ -63,6 +63,7 @@ jobs:
           command: |
             #kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
             cd /home/mayank/kubernetes/manifests/
+            ls
             kubectl apply -f kubeconfig.yaml
             #kubectl apply -f "$(pwd)/kubeconfig.yaml"
 
