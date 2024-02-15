@@ -32,21 +32,10 @@ jobs:
       - image: python:3.8
 
     steps:
-      #- run: echo "Deploying to production server"
+      
       #- attach_workspace:
       #    at: /workspace
 
-      # Install Streamlit
-      #- run:
-      #    name: Install Streamlit
-      #    command: |
-      #      pip install streamlit
-
-      # Deploy Streamlit app
-      #- run:
-      #    name: Deploy Streamlit App
-      #    command: |
-      #      streamlit run app.py &
       - run:
           name: Install kubectl
           command: |
@@ -67,8 +56,9 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
-            kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
-      
+            #kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
+            cd /home/mayank/kubernetes/manifests
+            kubectl apply -f .
 
 workflows:
   version: 2
