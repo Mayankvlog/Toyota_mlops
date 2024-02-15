@@ -61,9 +61,10 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
-            kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
+            #kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
             #cd /home/mayank/kubernetes/manifests//kubeconfig.yaml
             #kubectl apply -f .
+            kubectl apply -f "$(pwd)/kubeconfig.yaml"
 
 workflows:
   version: 2
