@@ -43,11 +43,16 @@ jobs:
             chmod +x kubectl
             mv kubectl /usr/local/bin/
             
+      #- run:
+      #    name: Configure kubectl
+      #    command: |
+      #      echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
+      #      export KUBECONFIG=$PWD/kubeconfig.yaml
+
       - run:
-          name: Configure kubectl
-          command: |
-            echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
-            export KUBECONFIG=$PWD/kubeconfig.yaml
+          name: Set KUBECONFIG
+          command: export KUBECONFIG=/home/mayank/kubernetes/manifests/kubeconfig.yaml
+
 
       - run:
           name: List files in manifests directory
@@ -56,9 +61,9 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
-            #kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
-            cd /home/mayank/kubernetes/manifests//kubeconfig.yaml
-            kubectl apply -f .
+            kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
+            #cd /home/mayank/kubernetes/manifests//kubeconfig.yaml
+            #kubectl apply -f .
 
 workflows:
   version: 2
