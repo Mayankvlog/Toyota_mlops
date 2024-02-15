@@ -32,7 +32,7 @@ jobs:
       - image: python:3.8
 
     steps:
-      - run: echo "Deploying to production server"
+      #- run: echo "Deploying to production server"
       #- attach_workspace:
       #    at: /workspace
 
@@ -47,6 +47,20 @@ jobs:
       #    name: Deploy Streamlit App
       #    command: |
       #      streamlit run app.py &
+      - run:
+          name: Install kubectl
+          command: |
+            apt-get update && apt-get install -y kubectl
+      - run: echo "Deploying to production server"
+      - run:
+          name: Configure kubectl
+          command: |
+            echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
+            export KUBECONFIG=$PWD/kubeconfig.yaml
+      - run:
+          name: Deploy to Kubernetes
+          command: |
+            kubectl apply -f path/to/your/kubernetes/manifests
       
 
 workflows:
