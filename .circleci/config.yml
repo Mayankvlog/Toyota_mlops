@@ -60,6 +60,11 @@ jobs:
           command: |
             echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
             export KUBECONFIG=$PWD/kubeconfig.yaml
+
+      - run:
+          name: List files in manifests directory
+          command: ls /home/mayank/kubernetes/manifests
+
       - run:
           name: Deploy to Kubernetes
           command: |
