@@ -38,6 +38,9 @@ jobs:
     steps:
       - attach_workspace:
           at: /workspace
+      - run:
+          name: List files in the workspace
+          command: ls /workspace
 
       - run:
           name: Install kubectl
