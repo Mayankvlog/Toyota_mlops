@@ -21,28 +21,23 @@ jobs:
             pytest -v --junitxml=test-results/junit.xml
       - store_test_results:
           path: test-results
+
+      # Save plots as artifacts
       - persist_to_workspace:
           root: .
           paths:
-            - models
-            - test-results
+            - scatter_plot.html
+            - pie_plot.html
+            - bar_plot.html
+            - line_plot.html
 
   deploy:
     docker:
-      - image: python:3.8
+      - image: google/cloud-sdk
 
     steps:
-      
       - attach_workspace:
           at: /workspace
-
-      - run:
-          name: List files in the workspace
-          command: ls /workspace
-
-      - run:
-          name: Print kubeconfig.yaml
-          command: cat /workspace/kubeconfig.yaml
 
       - run:
           name: Install kubectl
@@ -50,38 +45,11 @@ jobs:
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
             chmod +x kubectl
             mv kubectl /usr/local/bin/
-            
-      - run:
-          name: Configure kubectl
-          command: |
-            echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
-            export KUBECONFIG=$PWD/kubeconfig.yaml
 
-      #- run:
-      #    name: Set KUBECONFIG
-      #    command: export KUBECONFIG=/home/mayank/kubernetes/manifests/kubeconfig.yaml
-
-      #- run:
-      #    name: List files in manifests directory
-      #    command: mkdir -p /home/mayank/kubernetes/manifests
-      - run:
-          name: Debug kubeconfig.yaml generation
-          command: |
-            echo "KUBE_CONFIG_DATA: $KUBE_CONFIG_DATA"
-            echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
-            cat kubeconfig.yaml
-
-      - run:
-          name: List files in the directory
-          command: ls $PWD
-
+      # Deploy to Kubernetes
       - run:
           name: Deploy to Kubernetes
           command: |
-            #kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
-            #cd /home/mayank/kubernetes/manifests/
-            #ls
-            #kubectl apply -f kubeconfig.yaml
             kubectl apply -f "$PWD/kubeconfig.yaml"
 
 workflows:
