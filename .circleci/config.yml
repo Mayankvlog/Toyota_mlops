@@ -33,8 +33,8 @@ jobs:
 
     steps:
       
-      #- attach_workspace:
-      #    at: /workspace
+      - attach_workspace:
+          at: /workspace
 
       - run:
           name: Install kubectl
@@ -43,29 +43,29 @@ jobs:
             chmod +x kubectl
             mv kubectl /usr/local/bin/
             
+      - run:
+          name: Configure kubectl
+          command: |
+            echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
+            export KUBECONFIG=$PWD/kubeconfig.yaml
+
       #- run:
-      #    name: Configure kubectl
-      #    command: |
-      #      echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
-      #      export KUBECONFIG=$PWD/kubeconfig.yaml
-
-      - run:
-          name: Set KUBECONFIG
-          command: export KUBECONFIG=/home/mayank/kubernetes/manifests/kubeconfig.yaml
+      #    name: Set KUBECONFIG
+      #    command: export KUBECONFIG=/home/mayank/kubernetes/manifests/kubeconfig.yaml
 
 
-      - run:
-          name: List files in manifests directory
-          command: mkdir -p /home/mayank/kubernetes/manifests
+      #- run:
+      #    name: List files in manifests directory
+      #    command: mkdir -p /home/mayank/kubernetes/manifests
 
       - run:
           name: Deploy to Kubernetes
           command: |
             #kubectl apply -f /home/mayank/kubernetes/manifests/kubeconfig.yaml
-            cd /home/mayank/kubernetes/manifests/
-            ls
-            kubectl apply -f kubeconfig.yaml
-            #kubectl apply -f "$(pwd)/kubeconfig.yaml"
+            #cd /home/mayank/kubernetes/manifests/
+            #ls
+            #kubectl apply -f kubeconfig.yaml
+            kubectl apply -f "$(pwd)/kubeconfig.yaml"
 
 workflows:
   version: 2
