@@ -57,6 +57,9 @@ jobs:
       #- run:
       #    name: List files in manifests directory
       #    command: mkdir -p /home/mayank/kubernetes/manifests
+      - run:
+          name: List files in the directory
+          command: ls $PWD
 
       - run:
           name: Deploy to Kubernetes
