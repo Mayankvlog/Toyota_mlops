@@ -65,7 +65,7 @@ jobs:
             #cd /home/mayank/kubernetes/manifests/
             #ls
             #kubectl apply -f kubeconfig.yaml
-            kubectl apply -f "$ PWD/kubeconfig.yaml"
+            kubectl apply -f "$PWD/kubeconfig.yaml"
 
 workflows:
   version: 2
