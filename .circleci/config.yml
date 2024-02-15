@@ -37,6 +37,14 @@ jobs:
           at: /workspace
 
       - run:
+          name: List files in the workspace
+          command: ls /workspace
+
+      - run:
+          name: Print kubeconfig.yaml
+          command: cat /workspace/kubeconfig.yaml
+
+      - run:
           name: Install kubectl
           command: |
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -53,10 +61,16 @@ jobs:
       #    name: Set KUBECONFIG
       #    command: export KUBECONFIG=/home/mayank/kubernetes/manifests/kubeconfig.yaml
 
-
       #- run:
       #    name: List files in manifests directory
       #    command: mkdir -p /home/mayank/kubernetes/manifests
+      - run:
+          name: Debug kubeconfig.yaml generation
+          command: |
+            echo "KUBE_CONFIG_DATA: $KUBE_CONFIG_DATA"
+            echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig.yaml
+            cat kubeconfig.yaml
+
       - run:
           name: List files in the directory
           command: ls $PWD
