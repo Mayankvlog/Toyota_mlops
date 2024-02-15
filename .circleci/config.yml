@@ -54,7 +54,7 @@ jobs:
             chmod +x kubectl
             mv kubectl /usr/local/bin/
             
-      - run: echo "Deploying to production server"
+      #- run: echo "Deploying to production server"
       - run:
           name: Configure kubectl
           command: |
@@ -63,7 +63,7 @@ jobs:
 
       - run:
           name: List files in manifests directory
-          command: ls /home/mayank/kubernetes/manifests
+          command: mkdir -p /home/mayank/kubernetes/manifests
 
       - run:
           name: Deploy to Kubernetes
