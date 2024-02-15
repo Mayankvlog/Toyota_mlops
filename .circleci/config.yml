@@ -63,7 +63,7 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
-            kubectl apply -f path/to/your/kubernetes/manifests
+            kubectl apply -f home/mayank/kubernetes/manifests
       
 
 workflows:
