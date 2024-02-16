@@ -52,9 +52,9 @@ jobs:
       # Deploy to Kubernetes
       - run:
           name: Deploy to Kubernetes
-          command: |
+          command:  kubectl apply -f "$PWD/kubeconfig.yaml"
             #kubectl apply -f "$PWD/kubeconfig.yaml"
-            kubectl apply -f "/workspace/kubeconfig.yaml"
+            #kubectl apply -f "/workspace/kubeconfig.yaml"
 
 workflows:
   version: 2
