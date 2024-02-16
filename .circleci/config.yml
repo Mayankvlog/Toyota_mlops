@@ -54,10 +54,7 @@ jobs:
           name: Deploy to Kubernetes
           command: |
             #kubectl apply -f "$PWD/kubeconfig.yaml"
-            #kubectl apply -f "$PWD/kubeconfig.yaml"
-            #kubectl apply -f "/workspace/kubeconfig.yaml"
-            cp /workspace/kubeconfig.yaml $HOME/kubeconfig.yaml
-            kubectl apply -f $HOME/kubeconfig.yaml
+            #kubectl apply -f "/workspace/kubeconf
 
 workflows:
   version: 2
