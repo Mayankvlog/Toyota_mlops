@@ -45,15 +45,15 @@ jobs:
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
             chmod +x kubectl
             mv kubectl /usr/local/bin/
-            kubectl version --client
+            #kubectl version --client
             
       # Deploy to Kubernetes
       - run:
           name: Deploy to Kubernetes
           command: |
             ls /workspace
-            #kubectl apply -f "$PWD/kubeconfig.yaml"
-            kubectl apply -f "/workspace/kubeconf
+            kubectl apply -f "$PWD/kubeconfig.yaml"
+            #kubectl apply -f "/workspace/kubeconf
 
 workflows:
   version: 2
