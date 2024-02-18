@@ -49,8 +49,7 @@ jobs:
       - run:
           name: Heroku Login
           command: |
-            #echo 65270893-27cc-471a-9db3-3041dd3fa00a | docker login --username=_ --password-stdin registry.heroku.com
-            docker login --username=_ --password-stdin registry.heroku.com <<< "65270893-27cc-471a-9db3-3041dd3fa00a"
+            echo 65270893-27cc-471a-9db3-3041dd3fa00a | docker login --username=_ --password-stdin registry.heroku.com
             heroku container:login
 
       # Push Docker image to Heroku
