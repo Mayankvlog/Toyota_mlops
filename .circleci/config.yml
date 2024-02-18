@@ -36,29 +36,27 @@ jobs:
       - image: circleci/python:3.8
 
     steps:
-     # - attach_workspace:
-     #     at: /workspace
+      - checkout
 
+      # Install Deta CLI
       - run:
-          name: Install Heroku CLI
+          name: Install Deta CLI
           command: |
-            curl https://cli-assets.heroku.com/install.sh | sh
-            heroku --version
+            curl -fsSL https://get.deta.dev/cli.sh | sh
+            deta --version
 
-      # Log in to Heroku
+      # Log in to Deta
       - run:
-          name: Heroku Login
+          name: Deta Login
           command: |
-            echo 65270893-27cc-471a-9db3-3041dd3fa00a | docker login --username=_ --password-stdin registry.heroku.com
-            heroku container:login
+            deta login --token YOUR_DETA_TOKEN
 
-      # Push Docker image to Heroku
+      # Deploy to Deta
       - run:
-          name: Deploy to Heroku
+          name: Deploy to Deta
           command: |
-            docker tag your-image registry.heroku.com/your-app/web
-            docker push registry.heroku.com/your-app/web
-            heroku container:release web -a your-app
+            deta deploy -w
+
 
 workflows:
   version: 2
