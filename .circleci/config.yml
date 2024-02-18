@@ -35,9 +35,9 @@ jobs:
     docker:
       - image: circleci/python:3.8
 
-    steps:
-      - attach_workspace:
-          at: /workspace
+    #steps:
+     # - attach_workspace:
+     #     at: /workspace
 
       - run:
           name: Install Heroku CLI
