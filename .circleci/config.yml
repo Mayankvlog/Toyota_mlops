@@ -31,7 +31,7 @@ jobs:
             - bar_plot.html
             - line_plot.html
 
-deploy:
+  deploy:
     docker:
       - image: circleci/node:14
 
@@ -54,7 +54,6 @@ deploy:
       - run:
           name: Deploy to Firebase
           command: firebase deploy --token $FIREBASE_TOKEN
-
 
 workflows:
   version: 2
