@@ -41,8 +41,8 @@ jobs:
       # Install Firebase CLI
       - run:
           name: Install Firebase CLI
-          #command: npm install -g firebase-tools
-          cammand: npm install -g firebase-tools --prefix 
+          command: npm install -g firebase-tools
+          #cammand: npm install -g firebase-tools --prefix 
           #firebase --version
 
           
