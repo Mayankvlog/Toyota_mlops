@@ -37,6 +37,11 @@ jobs:
 
     steps:
       - checkout
+      - run: node --version
+      
+      - node/install-packages:
+          pkg-manager: npm
+      
       - run:
           command: npm run build
           name: Build server
