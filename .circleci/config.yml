@@ -53,7 +53,7 @@ jobs:
           name: Firebase Login
           command: |
             echo "1//0gwMHq_kd_t7sCgYIARAAGBASNwF-L9Irui-OR9oN-GlgGNgPe1-W5YVjnpvac9zPzlvtSS8sFPKMXHc31qBUgQJFAe0UYUcS6bc" | base64 --decode > My First Project
-            cat "My_First_Project_Token"
+            cat "My First Project"
             firebase login --token "$(cat My First Project)"
             #firebase login --token $(cat furebase_token)
       # Deploy to Firebase
