@@ -32,16 +32,17 @@ jobs:
             - line_plot.html
 
   deploy:
-    docker:
-      - image: circleci/node:16
-
+    executor:
+      name: node/default
+      tag: '18.16'
     steps:
-      - checkout
+      - checkout             
       - run: node --version
-      
       - node/install-packages:
           pkg-manager: npm
-      
+      - run:
+          command: npm run test:unit
+          name: Run unit tests
       - run:
           command: npm run build
           name: Build server
@@ -52,6 +53,8 @@ jobs:
       - run:
           command: sleep 5 && curl -I localhost:5000
           name: Verify server is running
+
+
 
 workflows:
   version: 2
