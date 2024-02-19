@@ -52,8 +52,8 @@ jobs:
       - run:
           name: Firebase Login
           command: |
-            echo 1//0gwMHq_kd_t7sCgYIARAAGBASNwF-L9Irui-OR9oN-GlgGNgPe1-W5YVjnpvac9zPzlvtSS8sFPKMXHc31qBUgQJFAe0UYUcS6bc | base64 --decode > firebase_token
-            firebase login --token $(cat firebase_token)
+            echo "1//0gwMHq_kd_t7sCgYIARAAGBASNwF-L9Irui-OR9oN-GlgGNgPe1-W5YVjnpvac9zPzlvtSS8sFPKMXHc31qBUgQJFAe0UYUcS6bc" | base64 --decode > firebase_token
+            firebase login --token "$(cat firebase_token)"
             #firebase login --token $(cat furebase_token)
       # Deploy to Firebase
       - run:
