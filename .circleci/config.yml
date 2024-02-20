@@ -32,7 +32,7 @@ jobs:
             - line_plot.html
 
   deploy:
-    machine:
+    docker:
       - image: ubuntu-2204:2023.07.2
 
     steps:
