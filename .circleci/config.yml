@@ -36,12 +36,16 @@ jobs:
       - image: python:3.8
 
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            #- "SHA256:your_ssh_key_fingerprint"
+            - "SHA256:Msw+ELHRFCtXJUO0ONwxfTcJOsqDCfKfCIzfkBH9RLI"
+            
       - run:
           name: Deploy Over SSH
           command: |
             #ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
-            ssh $SSH_USER@$SSH_HOST "<remote deploy commands>"
+            ssh $SSH_USER@$git.circleci.com "<remote deploy commands>"
 
 workflows:
   version: 2
