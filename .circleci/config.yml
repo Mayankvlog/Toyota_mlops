@@ -33,9 +33,10 @@ jobs:
 
   deploy:
     docker:
-      - image: ubuntu-2204:2023.07.2
+      - image: python:3.8
 
     steps:
+      - checkout
       - run:
           name: Deploy Over SSH
           command: |
