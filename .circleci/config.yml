@@ -32,29 +32,15 @@ jobs:
             - line_plot.html
 
   deploy:
-    executor:
-      name: node/default
-      tag: '18.16'
+    machine:
+      - image: ubuntu-2204:2023.07.2
+
     steps:
-      - checkout             
-      - run: node --version
-      - node/install-packages:
-          pkg-manager: npm
       - run:
-          command: npm run test:unit
-          name: Run unit tests
-      - run:
-          command: npm run build
-          name: Build server
-      - run:
-          command: npm run start
-          name: Start server
-          background: true
-      - run:
-          command: sleep 5 && curl -I localhost:5000
-          name: Verify server is running
-
-
+          name: Deploy Over SSH
+          command: |
+            #ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
+            ssh $SSH_USER@$SSH_HOST "<remote deploy commands>"
 
 workflows:
   version: 2
