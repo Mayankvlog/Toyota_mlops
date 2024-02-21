@@ -46,7 +46,7 @@ jobs:
           name: Deploy Over SSH
           command: |
             #ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
-            #ssh $SSH_USER@$git.circleci.com "<remote deploy commands>"
+            ssh $Mayank@$192.168.29.255 "<remote deploy commands>"
 
 workflows:
   version: 2
