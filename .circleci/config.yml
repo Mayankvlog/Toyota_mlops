@@ -39,7 +39,8 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             #- "SHA256:your_ssh_key_fingerprint"
-            - "SHA256:Msw+ELHRFCtXJUO0ONwxfTcJOsqDCfKfCIzfkBH9RLI"
+            #- "SHA256:Msw+ELHRFCtXJUO0ONwxfTcJOsqDCfKfCIzfkBH9RLI"
+            - "SHA256:GzqmQhTkLH6u5pkQvaDPOB5cSgIBOK+KGLwLGydQzvI"
             
       - run:
           name: Deploy Over SSH
