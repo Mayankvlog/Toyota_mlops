@@ -39,15 +39,27 @@ jobs:
       - attach_workspace:
           at: /workspace
 
+      # Install Netlify CLI
+      - run:
+          name: Install Netlify CLI
+          command: |
+            curl -sSL -o netlify-install.sh https://cli.netlify.com/install.sh
+            bash netlify-install.sh
+
+      # Print Netlify CLI version
+      - run:
+          name: Print Netlify CLI Version
+          command: netlify --version
+
       # Deploy to Netlify
       - run:
           name: Deploy to Netlify
           command: |
-            echo "Deploying to Netlify"
+            #echo "Deploying to Netlify"
             cd /workspace
-            curl -sSL -o netlify-install.sh https://cli.netlify.com/install.sh
-            bash netlify-install.sh
-            netlify --version 
+            #curl -sSL -o netlify-install.sh https://cli.netlify.com/install.sh
+            #bash netlify-install.sh
+            #netlify --version 
             netlify deploy --site b195aebb-f51e-45bb-b7db-9067bc5e7bf2 --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c
 
       
