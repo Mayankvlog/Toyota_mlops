@@ -39,6 +39,24 @@ jobs:
       - attach_workspace:
           at: /workspace
 
+      - run:
+          name: Install Dependencies
+          command: |
+            apt-get update
+            apt-get install -y nodejs npm
+
+      - run:
+          name: Install Dependencies
+          command: |
+            cd /workspace
+            npm install
+
+      - run:
+          name: Build and Test
+          command: |
+            cd /workspace
+            npm run build
+
       # Install Netlify CLI
       - run:
           name: Install Netlify CLI
