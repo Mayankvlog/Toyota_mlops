@@ -36,18 +36,19 @@ jobs:
       - image: python:3.8
 
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            #- "SHA256:your_ssh_key_fingerprint"
-            #- "SHA256:Msw+ELHRFCtXJUO0ONwxfTcJOsqDCfKfCIzfkBH9RLI"
-            - "SHA256:GzqmQhTkLH6u5pkQvaDPOB5cSgIBOK+KGLwLGydQzvI"
-            
-      - run:
-          name: Deploy Over SSH
-          command: |
-            #ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
-            ssh $Mayank@$192.168.29.255 "<remote deploy commands>"
+      - attach_workspace:
+          at: /workspace
 
+      # Deploy to Netlify
+      - run:
+          name: Deploy to Netlify
+          command: |
+            echo "Deploying to Netlify"
+            cd /workspace
+            curl -sSL https://cli.netlify.com/install.sh | bash
+            netlify deploy --site b195aebb-f51e-45bb-b7db-9067bc5e7bf2 --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c
+
+      
 workflows:
   version: 2
   build_and_deploy:
