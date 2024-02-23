@@ -8,6 +8,13 @@ jobs:
     steps:
       - checkout
 
+      # Install Docker
+      - run:
+          name: Install Docker
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y docker.io
+
       # Install dependencies
       - run:
           name: Install Dependencies
