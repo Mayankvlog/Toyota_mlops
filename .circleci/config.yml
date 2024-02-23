@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t your-dockerhub-username/your-image-name:latest .
+            docker build -t your-dockerhub-username/streamlit-app:latest .
 
       # Login to DockerHub
       - run:
