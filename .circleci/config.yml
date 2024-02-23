@@ -47,7 +47,7 @@ jobs:
             docker push $DOCKERHUB_USERNAME/$streamlit-app:latest
 
       - setup_remote_docker:
-          version: 24.0.5
+          version: 19.03.13
 
 workflows:
   version: 2
