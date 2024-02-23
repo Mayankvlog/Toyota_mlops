@@ -38,22 +38,32 @@ jobs:
     steps:
 
       # Build Docker image
-      - run:
-          name: Build Docker Image
-          command: |
-            docker build -t your-dockerhub-username/streamlit-app:latest .
+      #- run:
+      #    name: Build Docker Image
+      #    command: |
+      #      docker build -t your-dockerhub-username/streamlit-app:latest .
 
       # Login to DockerHub
-      - run:
-          name: Login to DockerHub
-          command: |
-            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      #- run:
+      #    name: Login to DockerHub
+      #    command: |
+      #      echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
       # Push Docker image to DockerHub
+      #- run:
+      #    name: Push to DockerHub
+      #    command: |
+      #      docker push your-dockerhub-username/streamlit-app:latest
+
+      - setup_remote_docker:
+          version: 24.0.5
       - run:
-          name: Push to DockerHub
+          name: Build and push to Docker Hub
           command: |
-            docker push your-dockerhub-username/streamlit-app:latest
+            docker build -t $DOCKERHUB_USERMAME/$streamlit-app:latest .
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $DOCKERHUB_USERNAME/$streamlit-app:latest
+
       
 workflows:
   version: 2
