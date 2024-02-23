@@ -4,4 +4,3 @@ plotly
 scikit_learn
 streamlit
 protobuf
-pytest
