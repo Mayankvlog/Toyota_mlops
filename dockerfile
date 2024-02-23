@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Update pip
-RUN pip3 install --upgrade pip3
+#RUN pip3 install --upgrade pip3
 
 # Install any needed packages specified in requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
