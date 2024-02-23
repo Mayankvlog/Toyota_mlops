@@ -33,7 +33,7 @@ jobs:
 
   deploy:
     docker:
-      - image: docker:24.0.5,
+      - image: streamlit-app:latest
 
     steps:
       - attach_workspace:
