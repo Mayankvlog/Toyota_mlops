@@ -36,10 +36,15 @@ jobs:
       - image: cimg/python:3.8
 
     steps:
+
+      - run:
+          name: Ensure Workspace Directory
+          command: mkdir -p /workspace
+          
       - attach_workspace:
           at: /workspace
 
-        # Build Docker image
+      # Build Docker image
       - run:
           name: Build Docker Image
           command: |
