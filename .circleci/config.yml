@@ -33,9 +33,10 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/python:3.8
+      - image: circleci/buildpack-deps:stretch
 
     steps:
+       - checkout
 
       # Build Docker image
       #- run:
