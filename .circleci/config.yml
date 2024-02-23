@@ -39,48 +39,23 @@ jobs:
       - attach_workspace:
           at: /workspace
 
+        # Build Docker image
       - run:
-          name: Install Dependencies
+          name: Build Docker Image
           command: |
-            apt-get update
-            apt-get install -y nodejs npm
+            docker build -t your-dockerhub-username/your-image-name:latest .
 
+      # Login to DockerHub
       - run:
-          name: Install Dependencies
+          name: Login to DockerHub
           command: |
-            cd /workspace
-            npm install
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
+      # Push Docker image to DockerHub
       - run:
-          name: Build and Test
+          name: Push to DockerHub
           command: |
-            cd /workspace
-            npm run build
-
-      # Install Netlify CLI
-      - run:
-          name: Install Netlify CLI
-          command: |
-            #curl -sSL -o netlify-install.sh https://cli.netlify.com/install.sh
-            #bash netlify-install.sh
-            npm install -g netlify-cli
-              
-      # Print Netlify CLI version
-      - run:
-          name: Print Netlify CLI Version
-          command: netlify --version
-
-      # Deploy to Netlify
-      - run:
-          name: Deploy to Netlify
-          command: |
-            #echo "Deploying to Netlify"
-            cd /workspace
-            #curl -sSL -o netlify-install.sh https://cli.netlify.com/install.sh
-            #bash netlify-install.sh
-            #netlify --version 
-            netlify deploy --site b195aebb-f51e-45bb-b7db-9067bc5e7bf2 --auth nfp_fLKeWEoR4JhmGmwWk3SfHvDji4PaHp7t888c
-
+            docker push your-dockerhub-username/streamlit-app:latest
       
 workflows:
   version: 2
