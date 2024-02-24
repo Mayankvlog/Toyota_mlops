@@ -21,6 +21,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
+            source venv/bin/activate
             pytest -v --junitxml=test-results/junit.xml
       - store_test_results:
           path: test-results
