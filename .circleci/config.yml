@@ -13,15 +13,15 @@ jobs:
           name: Install Dependencies
           command: |
             #pip install -r requirements.txt
-            python3 -m venv venv
-            source venv/bin/activate
+            #python3 -m venv venv
+            #source venv/bin/activate
             pip install --no-cache-dir --disable-pip-version-check --no-build-isolation -r requirements.txt
 
       # Run pytest and store results
       - run:
           name: Run Tests
           command: |
-            source venv/bin/activate
+            #source venv/bin/activate
             pytest -v --junitxml=test-results/junit.xml
       - store_test_results:
           path: test-results
