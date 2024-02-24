@@ -14,7 +14,9 @@ COPY . /app
 #RUN pip install --no-cache-dir -r requirements.txt
 #RUN pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
 #RUN pip install --no-cache-dir --disable-pip-version-check --no-parallel --quiet -r requirements.txt
-RUN pip install --no-cache-dir --disable-pip-version-check --no-build-isolation -r requirements.txt
+#RUN pip install --no-cache-dir --disable-pip-version-check --no-build-isolation -r requirements.txt
+RUN pip install --no-cache-dir --disable-pip-version-check --no-build-isolation --no-use-pep517 -r requirements.txt
+
 
 # Make port 8501 available to the world outside this container
 EXPOSE 8501
