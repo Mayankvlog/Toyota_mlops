@@ -1,7 +1,6 @@
 mlflow
 pandas
 plotly
+pytest
 scikit_learn
 streamlit
-protobuf
-pytest
