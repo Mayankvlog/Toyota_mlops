@@ -47,6 +47,8 @@ jobs:
             #sudo sh -c 'echo "deb [arch=amd64] https://cli.github.com/packages $(lsb_release -cs) main" > /etc/apt/sources.list.d/github-cli.list'
             #sudo apt-get update
             #sudo apt-get install gh
+            sudo apt update
+            sudo apt install snapd
             snap install gh --beta
 
       # Authenticate with GitHub (replace GITHUB_TOKEN with your GitHub token)
