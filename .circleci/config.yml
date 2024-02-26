@@ -12,18 +12,12 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            #pip install -r requirements.txt
-            #python3 -m venv venv
-            #source venv/bin/activate
-            #pip install --no-cache-dir --disable-pip-version-check --no-build-isolation -r requirements.txt
             pip install -r requirements.txt
-
 
       # Run pytest and store results
       - run:
           name: Run Tests
           command: |
-            #source venv/bin/activate
             pytest -v --junitxml=test-results/junit.xml
       - store_test_results:
           path: test-results
@@ -44,27 +38,27 @@ jobs:
     steps:
       - checkout
 
-      # Install Node.js
+      # Install GitHub CLI
       - run:
-          name: Install Node.js
+          name: Install GitHub CLI
           command: |
-            sudo curl -fsSL https://deb.nodesource.com/setup_16.x | sudo bash -
-            sudo apt-get install -y nodejs
-            sudo chmod 755 /var/lib/apt/lists
-            sudo chmod 755 /var/lib/apt/lists/partial
+            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+            sudo apt-add-repository https://cli.github.com/packages
+            sudo apt-get update
+            sudo apt-get install gh
 
-       # Authenticate with Firebase (replace FIREBASE_TOKEN with your Firebase token)
+      # Authenticate with GitHub (replace GITHUB_TOKEN with your GitHub token)
       - run:
-          name: Authenticate with Firebase
+          name: Authenticate with GitHub
           command: |
-            # Install Firebase CLI
-            npm install -g firebase-tools
+            gh auth login --with-token "$GITHUB_TOKEN"
 
-            # Authenticate with Firebase (replace FIREBASE_TOKEN with your Firebase token)
-            firebase login:ci --token "$FIREBASE_TOKEN"
-
-            # Deploy to Firebase hosting
-            firebase deploy --only hosting
+      # Deploy to GitHub Pages
+      - run:
+          name: Deploy to GitHub Pages
+          command: |
+            # Replace this with your deployment command
+            echo "Deploying to GitHub Pages"
 
 workflows:
   version: 2
@@ -82,3 +76,4 @@ workflows:
             branches:
               only:
                 - master
+    
