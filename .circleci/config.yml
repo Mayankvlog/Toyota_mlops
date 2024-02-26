@@ -1,5 +1,4 @@
 version: 2.1
-
 jobs:
   build:
     docker:
@@ -51,7 +50,7 @@ jobs:
             sudo apt install snapd
             snap install gh --beta
 
-      # Authenticate with GitHub (replace GITHUB_TOKEN with your GitHub token)
+      # Authenticate with GitHub 
       - run:
           name: Authenticate with GitHub
           command: |
