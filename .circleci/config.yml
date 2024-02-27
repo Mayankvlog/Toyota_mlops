@@ -51,8 +51,8 @@ jobs:
           name: Authenticate with GitHub
           command: |
             #gh auth login --with-token "$GITHUB_TOKEN"
-            echo "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" | gh auth login --with-token -
-
+            #echo "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" | gh auth login --with-token -
+            gh auth login --with-token "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"
       # Deploy to GitHub Pages
       - run:
           name: Deploy to GitHub Pages
