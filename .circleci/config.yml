@@ -39,36 +39,37 @@ jobs:
 
       
       # Deploy to Streamlit sharing
-      - run:
-          name: Deploy to Streamlit Sharing
-          command: |
-            pip install streamlit
-            streamlit deploy app.py
+      #- run:
+      #    name: Deploy to Streamlit Sharing
+      #    command: |
+      #      pip install streamlit
+      #      streamlit deploy app.py
 
 
       # Install GitHub CLI
-      #- run:
-      #    name: Install GitHub CLI
-      #    command: |
-      #      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-      #      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-      #      sudo apt update
-      #      sudo apt install gh
+      - run:
+          name: Install GitHub CLI
+          command: |
+            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+            sudo apt update
+            sudo apt install gh
 
       # Authenticate with GitHub 
-      #- run:
-      #    name: Authenticate with GitHub
-      #    command: |
-      #      #gh auth login --with-token "GITHUB_TOKEN"
-      #      #echo "$GITHUB_TOKEN" | gh auth login --with-token -
-      #      #gh auth login --with-token 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
-      #      gh auth login --with-token GITHUB_TOKEN
+      - run:
+          name: Authenticate with GitHub
+          command: |
+            gh auth login --with-token $GITHUB_TOKEN
+            #echo "$GITHUB_TOKEN" | gh auth login --with-token -
+            #gh auth login --with-token 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
+            #gh auth login --with-token GITHUB_TOKEN
+            
       # Deploy to GitHub Pages
-      #- run:
-      #    name: Deploy to GitHub Pages
-      #    command: |
-      #      # Replace this with your deployment command
-      #      echo "Deploying to GitHub Pages"
+      - run:
+          name: Deploy to GitHub Pages
+          command: |
+            # Replace this with your deployment command
+            echo "Deploying to GitHub Pages"
 
 workflows:
   version: 2
