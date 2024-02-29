@@ -55,21 +55,21 @@ jobs:
             sudo apt update
             sudo apt list --upgradable
             sudo apt install gh
-            #sudo apt list --upgradable
+            echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token -
             
       # Authenticate with GitHub 
-      - run:
-          name: Authenticate with GitHub
-          command: |
-            echo "${GITHUB_TOKEN}" | gh auth login --with-token -
+      #- run:
+      #    name: Authenticate with GitHub
+      #    command: |
+      #      echo "${GITHUB_TOKEN}" | gh auth login --with-token -
             #gh auth login --with-token $GITHUB_TOKEN
             #echo "$GITHUB_TOKEN" | gh auth login --with-token -
             #gh auth login --with-token GITHUB_TOKEN
             
       # Deploy to GitHub Pages
-      - run:
-          name: Deploy to GitHub Pages
-          command: |
+      #- run:
+      #    name: Deploy to GitHub Pages
+      #    command: |
             # Replace this with your deployment command
             echo "Deploying to GitHub Pages"
 
