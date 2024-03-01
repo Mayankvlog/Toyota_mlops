@@ -37,10 +37,6 @@ jobs:
     steps:
       - checkout
 
-      - run:
-          name : install npm dependencies
-          command: |
-            npm install --save
 
       - setup_remote_docker:
           docker_layer_caching: false
