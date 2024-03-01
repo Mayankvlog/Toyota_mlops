@@ -37,41 +37,21 @@ jobs:
     steps:
       - checkout
 
-      
-      # Deploy to Streamlit sharing
-      #- run:
-      #    name: Deploy to Streamlit Sharing
-      #    command: |
-      #      pip install streamlit
-      #      streamlit deploy app.py
+      - run:
+          name : install npm dependencies
+          command: |
+            npm install --save
 
+      - setup_remote_docker:
+          docker_layer_caching: false
 
-      # Install GitHub CLI
       - run:
-          name: Install Github CLI
+          name: Build docker image 
           command: |
-            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-            sudo apt update
-            sudo apt list --upgradable
-            sudo apt install gh
-            
-      # Authenticate with GitHub 
-      - run:
-          name: Authenticate with GitHub
-          command: |
-            #echo "${GITHUB_TOKEN}" | gh auth login --with-token -
-            #gh auth login --with-token $GITHUB_TOKEN
-            #echo "$GITHUB_TOKEN" | gh auth login --with-token -
-            #gh auth login --with-token GITHUB_TOKEN
-            echo "${{ GITHUB_TOKEN }}" | gh auth login --with-token -
-            
-      # Deploy to GitHub Pages
-      - run:
-          name: Deploy to GitHub Pages
-          command: |
-            # Replace this with your deployment command
-            echo "Deploying to GitHub Pages"
+            docker build -t toyotaapp -t mayank035/toyotaapp:latest .
+            echo $DOCKER_PASSWORD | docker login -u mayank035 --password-stdin
+            docker push mayank035/toyotaapp:latest
+
 
 workflows:
   version: 2
