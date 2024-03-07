@@ -1,0 +1,7 @@
+config:
+  azure-native:location: WestUS
+  container-azure-python:appPath: app
+  container-azure-python:containerPort: "80"
+  container-azure-python:cpu: "1"
+  container-azure-python:memory: "2"
+  pulumi:template: container-azure-python
