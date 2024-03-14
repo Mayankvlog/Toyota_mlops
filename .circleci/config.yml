@@ -47,6 +47,7 @@ jobs:
             echo $DOCKERHUB_PASSWORD | docker login -u mayank035 --password-stdin
             docker push mayank035/toyotaapp:latest
             docker pull mayank035/toyotaapp:latest
+            docker run -d -p 8080:80 mayank035/toyotaapp:latest
             
 workflows:
   version: 2
