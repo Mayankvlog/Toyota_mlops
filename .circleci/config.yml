@@ -55,6 +55,14 @@ jobs:
             echo "Container ID: $CONTAINER_ID"
             docker logs $CONTAINER_ID
             #curl -I http://localhost:8080
+
+      - run:
+          name: Display Docker logs for specific container
+          command: |
+            while true; do
+              docker logs $CONTAINER_ID
+              sleep 10
+            done
             
 workflows:
   version: 2
