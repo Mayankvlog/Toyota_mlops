@@ -52,7 +52,7 @@ jobs:
           name: Deploy Docker image to localhost
           command: |
             docker run -d -p 8080:80 mayank035/toyotaapp:latest
-            curl -I http://localhost:8080
+            curl http://localhost:8080
             
 workflows:
   version: 2
