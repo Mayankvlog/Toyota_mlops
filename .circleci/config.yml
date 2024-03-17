@@ -64,7 +64,7 @@ workflows:
             branches:
               only:
                 - master
-           post-steps:
+          post-steps:
             - store_artifacts:
                 path: test-results
       - deploy:
@@ -74,4 +74,3 @@ workflows:
             branches:
               only:
                 - master
-    
