@@ -54,7 +54,6 @@ jobs:
             CONTAINER_ID=$(docker run -d -p 8080:80 mayank035/toyotaapp:latest)
             echo "Container ID: $CONTAINER_ID"
             docker logs $CONTAINER_ID
-            #curl -I http://localhost:8080
             
 workflows:
   version: 2
@@ -65,6 +64,9 @@ workflows:
             branches:
               only:
                 - master
+           post-steps:
+            - store_artifacts:
+                path: test-results
       - deploy:
           requires:
             - build
