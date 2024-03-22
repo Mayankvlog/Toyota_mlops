@@ -33,13 +33,10 @@ jobs:
   deploy:
     docker:
       - image: cimg/python:3.8
-
     steps:
       - checkout
-
       - setup_remote_docker:
           docker_layer_caching: False
-
       - run:
           name: Build docker image 
           command: |
@@ -66,3 +63,4 @@ workflows:
             branches:
               only:
                 - master
+                
