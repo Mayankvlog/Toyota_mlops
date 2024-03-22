@@ -36,7 +36,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          docker_layer_caching: False
+          docker_layer_caching: True
       - run:
           name: Build docker image 
           command: |
