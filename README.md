@@ -32,4 +32,6 @@ Generally, the application gives a thorough answer for anticipating Toyota vehic
 docker run -d -p 8501:80 mayank035/toyotaapp:latest
 
 
+docker ps -a
+
 docker logs $Cointainer_id
