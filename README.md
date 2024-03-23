@@ -30,4 +30,6 @@ Streamlining the Docker picture size and working on the CI/CD pipeline setup.
 Generally, the application gives a thorough answer for anticipating Toyota vehicle costs and picturing the dataset, alongside hearty testing and sending work processes.                  
 #   Run cammands 
 docker run -d -p 8501:80 mayank035/toyotaapp:latest
+
+
 docker logs $Cointainer_id
